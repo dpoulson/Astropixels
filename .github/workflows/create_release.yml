@@ -16,24 +16,35 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
+    - name: Check for changes in 'src' directory
+      id: check_files
+      uses: tj-actions/changed-files@v44
+      with:
+        files: src/**
+
     - name: Set up Python
+      if: steps.check_files.outputs.any_changed == 'true'
       uses: actions/setup-python@v5
       with:
         python-version: '3.12'
 
     - name: Install PlatformIO
+      if: steps.check_files.outputs.any_changed == 'true'
       run: pip install platformio
 
     - name: Build PlatformIO project
+      if: steps.check_files.outputs.any_changed == 'true'
       run: pio run
 
     - name: Prepare release artifact
+      if: steps.check_files.outputs.any_changed == 'true'
       run: |
         mkdir -p release
         cp .pio/build/*/firmware.bin release/firmware.bin
         # Adjust path if needed
 
     - name: Create GitHub Release
+      if: steps.check_files.outputs.any_changed == 'true'
       uses: softprops/action-gh-release@v2
       with:
         files: release/firmware.bin
