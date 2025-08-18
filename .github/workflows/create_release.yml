@@ -66,9 +66,7 @@ jobs:
         run: ls -R artifacts_dir
 
       - name: Add ${{ matrix.environment }} to release
-        uses: xresloader/upload-to-github-release@v1
-        env: 
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          UPLOAD_URL: ${{ steps.create_release.outputs.upload_url }}
-        with:
-          file: artifacts_dir/*.bin
+        uses: shogo82148/actions-upload-release-asset@v1
+        with: 
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: artifacts_dir/*.bin
