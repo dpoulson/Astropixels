@@ -1,25 +1,32 @@
-name: PlatformIO CI
+name: Automated Release
 
-on: [push]
+on:
+  push:
+    branches:
+      - main  # or 'master' depending on your default branch
 
 jobs:
-  build:
+  build_and_release:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/cache@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
         with:
-          path: |
-            ~/.cache/pip
-            ~/.platformio/.cache
-          key: ${{ runner.os }}-pio
-      - uses: actions/setup-python@v5
+          fetch-depth: 0  # Required to get full history for file change detection
+
+      - name: Check for changes in 'src' directory
+        id: check_files
+        uses: tj-actions/changed-files@v46
         with:
-          python-version: '3.11'
-      - name: Install PlatformIO Core
-        run: pip install --upgrade platformio
+          files: src/**
 
-      - name: Build PlatformIO Project
-        run: pio run
-
+      - name: Create Release
+        if: steps.check_files.outputs.any_changed == 'true'
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ github.run_number }}
+          name: Release ${{ github.run_number }}
+          body: This is an automated release triggered by a push to the `src` directory.
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
