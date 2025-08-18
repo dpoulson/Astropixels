@@ -70,3 +70,24 @@ jobs:
         with: 
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: artifacts_dir/*/*.bin
+
+  add_bin_to_repo:
+    runs-on: ubuntu-latest
+    needs: build_firmware
+    permissions:
+      contents: write
+
+    steps:
+    - name: Prepare and Upload Firmware
+      run: |
+        # Create the firmware directory if it doesn't exist
+        mkdir -p docs/firmware
+        # Copy the compiled firmware.bin file to the 'firmware' directory
+        cp artifacts_dir/*/*.bin docs/firmware/
+    
+    - name: Commit and Push Firmware
+      uses: stefanzweifel/git-auto-commit-action@v5
+      with:
+        commit_message: "Automatic: Update firmware binaries"
+        file_pattern: 'docs/firmware/*.bin'
+    
