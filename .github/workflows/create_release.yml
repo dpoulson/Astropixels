@@ -33,8 +33,8 @@ jobs:
       - name: Rename and upload firmware as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.environment }}
-          path: .pio/build/${{ matrix.environment }}-firmware/firmware.bin
+          name: firmware-${{ matrix.environment }}
+          path: .pio/build/${{ matrix.environment }}/firmware.bin
           
   create_release:
     runs-on: ubuntu-latest
