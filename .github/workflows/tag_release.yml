@@ -1,0 +1,25 @@
+name: PlatformIO Build and Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_tag:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Bump version and push tag
+      id: tag_action
+      uses: anothrNick/github-tag-action@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        DEFAULT_BUMP: patch
+
