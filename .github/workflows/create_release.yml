@@ -69,10 +69,9 @@ jobs:
         run: |
           for file_path in artifacts_dir/*/*.bin; do
             echo "Processing file: $file_path"
-            # Get the name of the artifact directory (e.g., firmware-r2kt)
-            artifact_dir=$(dirname "$file_path")
-            # Extract the actual asset name from the directory name
-            asset_name=$(basename "$artifact_dir").bin
+            
+            # Extract the unique part of the filename (e.g., 'firmware-r2kt.bin')
+            asset_name=$(basename "$(dirname "$file_path")")".bin"
 
             curl -L \
             -X POST \
