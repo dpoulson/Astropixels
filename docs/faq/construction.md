@@ -1,0 +1,8 @@
+## Why JLCPCB?
+Quite simply, they’re the cheapest I’ve found. And as an added bonus they have their own EasyEDA web based software with an easy path to export into their PCB manufacturing side. Plus they’re coupled with LCSC who are their component supplier. This means its a one stop shop and extremely easy to go from design to production.
+## Why do you use the cable lengths you do?
+These are common sizes that I can easily buy in bulk. The lengths are designed for a standard dome with the control board mounted on the back of the RLD. I looked at the various lengths and came up with the most efficient use of the standard ones available. This is why some use extension leads. Getting batches of custom made lengths would probably drive up the cost of the Astropixels quite a bit.
+## Are the files available for me to make my own?
+At the moment, no. But then they are generally just strings of ws2812 LEDs so not the hardest thing to replicate. Also the benefit is in the bulk purchasing. If you were to get a single set manufactured it would easily be about £200. Of course you may want to hand solder them, but if you can do that you can also design the boards.
+## Why the ESP32?
+I’ve been messing with Arduinos for over a decade now, and in the last few years I’ve switched to mainly ESP32 boards because the WiFi on them makes IoT devices easy to make, plus they have a lot more processing power. The development boards I use are very easy to find (must be 30pin versions for the Astropixels) and I use them in all sorts of projects.
