@@ -33,7 +33,7 @@ jobs:
       - name: Rename and upload firmware as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: firmware-${{ matrix.environment }}
+          name: ${{ matrix.environment }}
           path: .pio/build/${{ matrix.environment }}/firmware.bin
           
   create_release:
@@ -72,4 +72,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           UPLOAD_URL: ${{ steps.create_release.outputs.upload_url }}
         with:
-          file: artifacts_dir/${{ matrix.environment }}/firmware-${{ matrix.environment }}.bin
+          file: artifacts_dir/${{ matrix.environment }}/${{ matrix.environment }}.bin
