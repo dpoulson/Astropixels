@@ -11,6 +11,8 @@ on:
 jobs:
   build_and__release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # This line grants write access to the repository
 
     steps:
     - name: Checkout repository
