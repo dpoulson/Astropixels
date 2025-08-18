@@ -40,8 +40,8 @@ void setup()
 {
     REELTWO_READY();
     SetupEvent::ready();
-    RLD.selectScrollTextLeft("... AstroPixels ....", LogicEngineRenderer::kBlue, 0, 15);
-    FLD.selectScrollTextLeft("... R2D2 ...", LogicEngineRenderer::kRed, 0, 15);
+    RLD.selectScrollTextLeft("... Astropixels ....", LogicEngineRenderer::kBlue, 0, 15);
+    FLD.selectScrollTextLeft("... Long Live The Empire ...", LogicEngineRenderer::kRed, 0, 15);
     CommandEvent::process("HPA0026|20");
 }
 
