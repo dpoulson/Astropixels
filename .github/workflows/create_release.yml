@@ -30,8 +30,8 @@ jobs:
       - name: Build PlatformIO project for ${{ matrix.environment }}
         run: pio run -e ${{ matrix.environment }}
 
-      - name: Rename firmware for ${{ matrix.environment }
-        run: mv .pio/build/${{ matrix.environment }}/firmware.bin ${{ matrix.environment }.bin
+      - name: Rename firmware for ${{ matrix.environment }}
+        run: mv .pio/build/${{ matrix.environment }}/firmware.bin ${{ matrix.environment }}.bin
 
       - name: Rename and upload firmware as artifact
         uses: actions/upload-artifact@v4
