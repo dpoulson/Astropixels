@@ -39,6 +39,10 @@ jobs:
   create_release:
     runs-on: ubuntu-latest
     needs: build_firmware
+    strategy:
+      fail-fast: false
+      matrix:
+        environment: [standard, imperial, r2kt] # <-- Add your environments here
     permissions:
       contents: write
 
