@@ -4,15 +4,15 @@ on:
   push:
     branches:
       - main
-  # You can also trigger on a new tag, for a more controlled release process
-  # tags:
-  #   - 'v*'
+    tags:
+      - 'v*'
 
 jobs:
-  build_and__release:
+  build_and_tag:
     runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     permissions:
-      contents: write # This line grants write access to the repository
+      contents: write
 
     steps:
     - name: Checkout repository
@@ -29,23 +29,32 @@ jobs:
     - name: Build PlatformIO project
       run: pio run
 
-    - name: Prepare release artifact
-      run: |
-        mkdir -p release
-        cp .pio/build/*/firmware.bin release/firmware.bin
-        # You may need to adjust the path if your project uses a different board
-        # e.g., cp .pio/build/esp32dev/firmware.bin release/firmware.bin
-
     - name: Bump version and push tag
       id: tag_action
       uses: anothrNick/github-tag-action@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        DEFAULT_BUMP: patch # or patch, or major
+        DEFAULT_BUMP: patch
+
+  create_release:
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: build_and_tag
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Prepare release artifact
+      run: |
+        mkdir -p release
+        cp .pio/build/*/firmware.bin release/firmware.bin
+        # Adjust path if needed
 
     - name: Create GitHub Release
       uses: softprops/action-gh-release@v2
-      if: startsWith(github.ref, 'refs/tags/')
       with:
         files: release/firmware.bin
         name: Release ${{ github.ref_name }}
