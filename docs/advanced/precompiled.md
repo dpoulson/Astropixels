@@ -2,8 +2,6 @@
 
 This page allows you to flash the latest firmware directly to your ESP32 device using a Chrome-based browser.
 
----
-
 <div>
     <link rel="stylesheet" href="./assets/css/installer.css">
     <script src="https://unpkg.com/esptool-js"></script>
