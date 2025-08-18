@@ -34,15 +34,11 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.environment }}
-          path: .pio/build/${{ matrix.environment }}/firmware.bin
+          path: .pio/build/${{ matrix.environment }}-firmware/firmware.bin
           
   create_release:
     runs-on: ubuntu-latest
     needs: build_firmware
-    strategy:
-      fail-fast: false
-      matrix:
-        environment: [standard, imperial, r2kt] # <-- Add your environments here
     permissions:
       contents: write
 
@@ -72,4 +68,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           UPLOAD_URL: ${{ steps.create_release.outputs.upload_url }}
         with:
-          file: artifacts_dir/${{ matrix.environment }}/${{ matrix.environment }}.bin
+          file: artifacts_dir/*/*.bin
