@@ -1,32 +1,45 @@
-name: Automated Release
+name: PlatformIO Build and Release
 
 on:
   push:
     branches:
-      - main  # or 'master' depending on your default branch
+      - main
+  # You can also trigger on a new tag, for a more controlled release process
+  # tags:
+  #   - 'v*'
 
 jobs:
-  build_and_release:
+  build_and__release:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # Required to get full history for file change detection
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
-      - name: Check for changes in 'src' directory
-        id: check_files
-        uses: tj-actions/changed-files@v46
-        with:
-          files: src/**
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
 
-      - name: Create Release
-        if: steps.check_files.outputs.any_changed == 'true'
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: v${{ github.run_number }}
-          name: Release ${{ github.run_number }}
-          body: This is an automated release triggered by a push to the `src` directory.
-          prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Install PlatformIO
+      run: pip install platformio
+
+    - name: Build PlatformIO project
+      run: pio run
+
+    - name: Prepare release artifact
+      run: |
+        mkdir -p release
+        cp .pio/build/*/firmware.bin release/firmware.bin
+        # You may need to adjust the path if your project uses a different board
+        # e.g., cp .pio/build/esp32dev/firmware.bin release/firmware.bin
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v2
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: release/firmware.bin
+        name: Release ${{ github.ref_name }}
+        tag_name: ${{ github.ref_name }}
+        body: |
+          Automated release of firmware.bin.
