@@ -9,7 +9,7 @@
             "chipFamily": "ESP32",
             "parts": [
                 {
-                    "path": "../imperial.bin/imperial.bin",
+                    "path": "./imperial.bin/imperial.bin",
                     "offset": 0
                 }
             ]
