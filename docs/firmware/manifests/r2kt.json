@@ -9,11 +9,11 @@
             "chipFamily": "ESP32",
             "parts": [
                 {
-                    "path": "../imperial.bin/imperial.bin",
+                    "path": "../r2kt.bin/r2kt.bin",
                     "offset": 0
                 }
             ]
         }
     ],
-    "manifest_name": "imperial-manifest.json"
+    "manifest_name": "r2kt-manifest.json"
 }

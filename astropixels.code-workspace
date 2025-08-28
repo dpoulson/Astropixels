@@ -4,5 +4,15 @@
             "name": "Astropixels",
             "path": "."
         }
-    ]
+    ],
+    "settings": {
+        "files.associations": {
+            "*.erd": "json",
+            "*.vuerd": "json",
+            "istream": "cpp",
+            "ostream": "cpp",
+            "*.tcc": "cpp",
+            "algorithm": "cpp"
+        }
+    }
 }
