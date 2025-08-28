@@ -9,7 +9,7 @@
             "chipFamily": "ESP32",
             "parts": [
                 {
-                    "path": "./standard.bin/standard.bin",
+                    "path": "../standard.bin/standard.bin",
                     "offset": 0
                 }
             ]
