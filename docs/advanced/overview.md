@@ -31,4 +31,6 @@ They use a library created by another builder called the ReelTwo library. This c
     </tbody>
 </table>
 
+### ESP32
 
+I use a standard, off the shelf ESP32 dev board (30 pin version). These can be bought from anywhere (ebay, amazon, aliexpress) if you do break yours. Then you can simply flash the correct firmware back on it. I generally have a couple of spares on me, just in case. The USB ports can be fragile and easily knocked off whilst working in the dome.

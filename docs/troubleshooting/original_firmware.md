@@ -1,7 +1,9 @@
 # Original Firmware
 
-If you have been messing with the firmware and want to go back to the basics, the example astropixels sketch in the ReelTwo library is what is installed by default when they are shipped.
+If you have been messing with the firmware and want to go back to the basics, the example Astropixels sketch in the ReelTwo library is what is installed by default when they are shipped.
 
-Mimir has also provided a handy tool to flash either the Astropixels Plus firmware via a browser, or the original firmware
+I have also created a web installer that you can use: 
 
-[https://reeltwo.github.io/AstroPixels-Installer/](https://reeltwo.github.io/AstroPixels-Installer/)
+[Web Installer](https://dpoulson.github.io/Astropixels/)
+
+The standard firmware is what is shipped by default with all Astropixels.
