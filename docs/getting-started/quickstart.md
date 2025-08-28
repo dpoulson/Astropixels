@@ -14,14 +14,14 @@ Make sure that the S,V, and G pins are connected to the correct pins on the ligh
 
 These cable lengths should be good if you mount the breakout board on the back of the RLD. The mounting holes are designed for this.
 
-Breakout board -> RLD = 1 x 10cm
-Breakout board -> FLD = 1 x 30cm extension + 1 x 10cm
-FLD -> FLD = 1 x 10cm
-Breakout board -> FPSI = 1 x 30cm extension + 1 x 20cm
-Breakout board -> RPSI = 1 x 30cm
-Breakout board -> THP = 1 x 30cm extension + 1 x 10cm
-Breakout board -> RHP = 1 x 20cm
-Breakout board -> FHP = 1 x 30cm extension + 1 x 30cm
+* Breakout board -> RLD = 1 x 10cm
+* Breakout board -> FLD = 1 x 30cm extension + 1 x 10cm
+* FLD -> FLD = 1 x 10cm
+* Breakout board -> FPSI = 1 x 30cm extension + 1 x 20cm
+* Breakout board -> RPSI = 1 x 30cm
+* Breakout board -> THP = 1 x 30cm extension + 1 x 10cm
+* Breakout board -> RHP = 1 x 20cm
+* Breakout board -> FHP = 1 x 30cm extension + 1 x 30cm
 
 # First Power
 
