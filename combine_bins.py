@@ -1,7 +1,7 @@
 import os
 import sys
 import subprocess
-import shutil
+import json
 
 # Get the PlatformIO environment from the command line argument
 try:
