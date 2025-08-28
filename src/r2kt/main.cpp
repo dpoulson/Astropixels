@@ -17,16 +17,16 @@
 I2CReceiver i2cReceiver(0x0a);
 
 
-static LogicEngineSettings LogicEngineEvil(
+static LogicEngineSettings LogicEngineCustom(
     LogicEngineDefaults::FRONT_FADE,
-    90,
+    220,
     LogicEngineDefaults::FRONT_DELAY,
-    0,
+    2,
     LogicEngineDefaults::FRONT_BRI,
     LogicEngineDefaults::sequence(LogicEngineDefaults::NORMAL));
 
-AstroPixelRLD<> RLD(LogicEngineEvil, 3);
-AstroPixelFLD<> FLD(LogicEngineEvil, 1);
+AstroPixelRLD<> RLD(LogicEngineCustom, 3);
+AstroPixelFLD<> FLD(LogicEngineCustom, 1);
 
 
 AstroPixelFrontPSI<> frontPSI(LogicEngineFrontPSIDefault, 4);

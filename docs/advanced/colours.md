@@ -54,7 +54,7 @@ The hue setting rotates the selected palette around a colour wheel using a value
 
 red -> yellow -> green -> cyan -> blue -> violet -> pink -> red
 
-For instance, if you set the palette to 2 (monotone red) and then set the hue to around 220, you will get a nice R2-KT colour.
+For instance, if you set the palette to 2 (monotone red) and then set the hue to around 220, you will get a nice R2-KT colour. Set hue to 255 for a nice red imperial look. Check the [Precompiled](precompiled.md) page for installing some custom colour firmware.
 
 ### DELAY and FADE
 These effect the transition of the hues.

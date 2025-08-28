@@ -19,9 +19,9 @@ I2CReceiver i2cReceiver(0x0a);
 
 static LogicEngineSettings LogicEngineCustom(
     LogicEngineDefaults::FRONT_FADE,
-    140,
+    255,
     LogicEngineDefaults::FRONT_DELAY,
-    0,
+    2,
     LogicEngineDefaults::FRONT_BRI,
     LogicEngineDefaults::sequence(LogicEngineDefaults::NORMAL));
 
