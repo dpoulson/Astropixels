@@ -43,18 +43,27 @@ jobs:
 
   commit_firmware:
     runs-on: ubuntu-latest
-    needs: build_firmware
+    needs: build_firmware # This job runs only after build_firmware is complete
     permissions:
       contents: write
-      
+
     steps:
+      - name: ⬇️ Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # This is essential for the commit action
+          fetch-depth: 0
+
+      - name: Download all firmware artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: docs/firmware # All artifacts will be downloaded into this directory
+
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v6
         with:
-          commit_message: "Automated: Upload firmware"
+          commit_message: "Automated: Update firmware binaries"
           branch: ${{ github.ref_name }}
-          # Path to the files you want to commit.
-          # The period means it will commit all changes in the directory
-          # You can also specify the exact directory like: 'compiled_binaries'
+          # Only commit the files in this specific subdirectory
           file_pattern: docs/firmware/
           
