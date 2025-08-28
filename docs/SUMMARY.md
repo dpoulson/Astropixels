@@ -17,7 +17,7 @@
 * [Interfacing](advanced/interfacing.md)
 * [AstroPixelsPlus](advanced/app.md)
 * [Marcduino](advanced/marcduino.md)
-* [Precompiled](advanced/precompiled.html)
+* [Precompiled](advanced/precompiled.md)
 
 ## Troubleshooting
 
