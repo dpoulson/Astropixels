@@ -41,10 +41,12 @@ firmware_bin = os.path.join(build_dir, 'firmware.bin')
 chip = 'esp32'
 
 
-# Run esptool.py to merge the binaries
+
 command = [
-    sys.executable,  # Use the same python interpreter as PlatformIO
-    esptool_path,
+    'pio', 'pkg', 'exec',
+    '--package', 'tool-esptoolpy',
+    '--',
+    'esptool.py',
     '--chip', chip,
     'merge_bin',
     '-o', output_file,
