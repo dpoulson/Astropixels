@@ -10,30 +10,26 @@ except IndexError:
     print("Error: Please provide the PlatformIO environment as a command-line argument.")
     sys.exit(1)
 
-# Find the full path to esptool.py using platformio
+# Find the full path to esptool.py
+# This is a more reliable method than trying to use a build target.
 try:
-    # Use pio to find the esptool.py path. The -c option makes it machine-readable.
-    result = subprocess.run(['pio', 'run', '--target', 'esptool', '-e', pio_env, '--verbose'], capture_output=True, text=True, check=True)
-    # The esptool.py command is in the output; we need to parse it.
+    # Use 'pio system' to get the list of installed packages in JSON format
+    result = subprocess.run(['pio', 'platform', 'show', 'espressif32', '--json-output'], capture_output=True, text=True, check=True)
+    platform_info = json.loads(result.stdout)
+    
     esptool_path = ""
-    for line in result.stdout.splitlines():
-        if "esptool.py" in line:
-            parts = line.split()
-            for part in parts:
-                if "esptool.py" in part:
-                    esptool_path = part.strip()
-                    break
-        if esptool_path:
-            break
+    for package in platform_info['packages']:
+        if package['type'] == 'tool' and 'esptool' in package['name']:
+            esptool_path = os.path.join(package['path'], 'esptool.py')
+            if os.path.exists(esptool_path):
+                break
     
     if not esptool_path:
-        print("Error: Could not find esptool.py path from PlatformIO output.")
+        print("Error: Could not find esptool.py path.")
         sys.exit(1)
 
 except subprocess.CalledProcessError as e:
     print(f"Error while running PlatformIO to find esptool.py path: {e}")
-    print(e.stdout)
-    print(e.stderr)
     sys.exit(1)
 
 # Define the build directory and output paths based on the environment
