@@ -32,45 +32,13 @@ jobs:
         run: pio run -e ${{ matrix.environment }}
 
       - name: Rename firmware for ${{ matrix.environment }}
-        run: mv .pio/build/${{ matrix.environment }}/firmware.bin ${{ matrix.environment }}.bin
+        run: mv .pio/build/${{ matrix.environment }}/firmware.bin docs/firmware/${{ matrix.environment }}.bin
 
       - name: Rename and upload firmware as artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.environment }}.bin
-          path: ${{ matrix.environment }}.bin
-          
-  create_release:
-    runs-on: ubuntu-latest
-    needs: build_firmware
-    permissions:
-      contents: write
-
-    steps:
-      - name: Create GitHub Release
-        id: create_release
-        uses: actions/create-release@v1.1.4
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
-
-      - name: Download all firmware artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: docs/firmware
-
-      - name: List all downloaded files
-        run: ls -R docs/firmware
-
-      - name: Add ${{ matrix.environment }} to release
-        uses: shogo82148/actions-upload-release-asset@v1
-        with: 
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: docs/firmware/*/*.bin
+          path: docs/firmware/${{ matrix.environment }}.bin
 
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v6
@@ -81,4 +49,4 @@ jobs:
           # The period means it will commit all changes in the directory
           # You can also specify the exact directory like: 'compiled_binaries'
           file_pattern: docs/firmware/
-    
+          
