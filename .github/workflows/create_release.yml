@@ -35,6 +35,9 @@ jobs:
         run: |
           python combine_bins.py ${{ matrix.environment }}
 
+      - name: Delete old ${{ matrix.environment }} firmware
+        run: rm -rf docs/firmware/${{ matrix.environment }}.bin
+
       - name: Rename firmware for ${{ matrix.environment }}
         run: mv .pio/build/${{ matrix.environment }}/${{ matrix.environment }}.bin docs/firmware/
 
