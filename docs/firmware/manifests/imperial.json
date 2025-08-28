@@ -9,11 +9,11 @@
             "chipFamily": "ESP32",
             "parts": [
                 {
-                    "path": "../standard.bin/standard.bin",
+                    "path": "../imperial.bin/imperial.bin",
                     "offset": 0
                 }
             ]
         }
     ],
-    "manifest_name": "standard-manifest.json"
+    "manifest_name": "imperial-manifest.json"
 }
