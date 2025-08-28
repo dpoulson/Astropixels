@@ -31,6 +31,10 @@ jobs:
       - name: Build PlatformIO project for ${{ matrix.environment }}
         run: pio run -e ${{ matrix.environment }}
 
+      - name: Combine binaries for esp-web-tools - ${{ matrix.environment }}
+        run: |
+          python combine_bins.py ${{ matrix.environment }}
+
       - name: Rename firmware for ${{ matrix.environment }}
         run: mv .pio/build/${{ matrix.environment }}/firmware.bin docs/firmware/${{ matrix.environment }}.bin
 
@@ -39,7 +43,6 @@ jobs:
         with:
           name: ${{ matrix.environment }}.bin
           path: docs/firmware/${{ matrix.environment }}.bin
-
 
   commit_firmware:
     runs-on: ubuntu-latest
