@@ -4,6 +4,7 @@ on:
   push:
     tags:
       - 'v*.*.*'
+  workflow_dispatch:
 
 jobs:
   build_firmware:
@@ -60,15 +61,24 @@ jobs:
       - name: Download all firmware artifacts
         uses: actions/download-artifact@v4
         with:
-          path: artifacts_dir
+          path: docs/firmware
 
       - name: List all downloaded files
-        run: ls -R artifacts_dir
+        run: ls -R docs/firmware
 
       - name: Add ${{ matrix.environment }} to release
         uses: shogo82148/actions-upload-release-asset@v1
         with: 
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: artifacts_dir/*/*.bin
+          asset_path: docs/firmware/*/*.bin
 
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v6
+        with:
+          commit_message: "Automated: Upload firmware"
+          branch: ${{ github.ref_name }}
+          # Path to the files you want to commit.
+          # The period means it will commit all changes in the directory
+          # You can also specify the exact directory like: 'compiled_binaries'
+          file_pattern: docs/firmware/
     

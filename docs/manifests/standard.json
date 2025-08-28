@@ -1,0 +1,19 @@
+{
+    "name": "AstroPixels",
+    "version": "25.08.20",
+    "funding_url": "https://esphome.io/guides/supporters.html",
+    "new_install_prompt_erase": true,
+    "new_install_improv_wait_time": 0,
+    "builds": [
+        {
+            "chipFamily": "ESP32",
+            "parts": [
+                {
+                    "path": "firmware/standard.bin",
+                    "offset": 0
+                }
+            ]
+        }
+    ],
+    "manifest_name": "standard-manifest.json"
+}
