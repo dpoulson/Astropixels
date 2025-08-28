@@ -11,7 +11,7 @@ except IndexError:
 
 # Define the build directory and output paths based on the environment
 build_dir = f'.pio/build/{pio_env}/'
-output_file = os.path.join(build_dir, 'firmware.bin')
+output_file = os.path.join(build_dir, f'{pio_env}.bin')
 bootloader_bin = os.path.join(build_dir, 'bootloader.bin')
 partitions_bin = os.path.join(build_dir, 'partitions.bin')
 firmware_bin = os.path.join(build_dir, 'firmware.bin')

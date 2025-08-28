@@ -36,7 +36,7 @@ jobs:
           python combine_bins.py ${{ matrix.environment }}
 
       - name: Rename firmware for ${{ matrix.environment }}
-        run: mv .pio/build/${{ matrix.environment }}/firmware.bin docs/firmware/${{ matrix.environment }}.bin
+        run: mv .pio/build/${{ matrix.environment }}/${{ matrix.environment }}.bin docs/firmware/
 
       - name: Rename and upload firmware as artifact
         uses: actions/upload-artifact@v4
