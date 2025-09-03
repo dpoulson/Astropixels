@@ -12,7 +12,8 @@
 ## Advanced
 
 * [Overview](advanced/overview.md)
-* [Setting Up](advanced/environment.md)
+* [Setting Up (Arduino)](advanced/environment-arduino.md)
+* [Setting Up (Platform IO)](advanced/environment-platformio.md)
 * [Changing Colors](advanced/colours.md)
 * [Interfacing](advanced/interfacing.md)
 * [AstroPixelsPlus](advanced/app.md)
