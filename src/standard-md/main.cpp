@@ -11,8 +11,10 @@
 #define SERIAL2_RX_PIN 16
 #define SERIAL2_TX_PIN 17
 #define COMMAND_SERIAL Serial2
-#define MD_BAUD 2400
+#define MD_BAUD 9600
 
+// Define this to enable marcduino command support on the serial port. Otherwise 
+// use standard logic engine style commands. 
 #define RECEIVE_MARCDUINO_COMMANDS
 
 #ifdef RECEIVE_MARCDUINO_COMMANDS
@@ -89,7 +91,7 @@ void setup()
     REELTWO_READY();
     COMMAND_SERIAL.begin(MD_BAUD, SERIAL_8N1, SERIAL2_RX_PIN, SERIAL2_TX_PIN);
     SetupEvent::ready();
-    RLD.selectScrollTextLeft("... PLUSISH ....", LogicEngineRenderer::kBlue, 0, 15);
+    RLD.selectScrollTextLeft("... AP-MD ....", LogicEngineRenderer::kBlue, 0, 15);
     FLD.selectScrollTextLeft("... R2D2 ...", LogicEngineRenderer::kRed, 0, 15);
     CommandEvent::process("HPA0026|20");
 }

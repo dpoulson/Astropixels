@@ -28,6 +28,8 @@ They use a library created by another builder called the ReelTwo library. This c
         <tr><td>AUX3</td><td>5</td></tr>
         <tr><td>AUX4</td><td>18</td></tr>
         <tr><td>AUX5</td><td>19</td></tr>
+        <tr><td>Serial2_RX</td><td>16</td></tr>
+        <tr><td>Serial2_TX</td><td>17</td></tr>
     </tbody>
 </table>
 

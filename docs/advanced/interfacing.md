@@ -5,9 +5,17 @@ For instance, you could trigger the HP to coincide with the Leia message being p
 
 The main documentation can be found with the ReelTwo library [here](https://reeltwo.github.io/Reeltwo/html/index.html). However, this page will break things down a little bit.
 
-You can interface with the Astropixels using either serial or i2c. By default, only i2c on address 0x0A is enabled, but you can install the [Astropixels Plus](advanced/app.md) firmware to gain a load of other functionality, including serial and wifi (so you can use the rtouch mobile app).
+You can interface with the Astropixels using either serial or i2c. By default, only i2c on address 0x0A is enabled on older firmwares. Newer firmwares have been updated to include serial input too. You can use the [web installer](https://dpoulson.github.io/Astropixels/) to upgrade.
 
-## I2C
+### I2C
+
+The i2c header has +ve, Gnd, Data, and clock connections. Only the data, clock, and gnd are needed. The default address is 0x0A.
+
+### Serial
+
+With the latest standard firmware, serial2 is listening at 9600 board for standard astropixel commands. If you want to use marcduinos, there is a custom firmware and instuctions for that [here](advanced/marcduino.md).
+
+## Commands
 
 ### Logics and PSI
 
@@ -77,7 +85,7 @@ This is a value between 0 and 9, with 0 being the fastest
 * Not used for march or failure effects
 
 #### Summary
-So for instance you could send via i2c the command ‘LE30000’ to set all logics to a pale green for the duration of the Leia message, or ‘LE1201510’ to make the front logics run a cylon style effect. One thing to watch out for is power draw if you do some effects.
+So for instance you could send via i2c the command ‘LE30000’ to set all logics to a pale green for the duration of the Leia message, or ‘LE1201010’ to make the front logics run a cylon style effect. One thing to watch out for is power draw if you do some effects.
 
 
 ### HPs
@@ -146,7 +154,7 @@ Random State Integer Values
 * 7 – Upper Right
 * 8 – Lower Right
 
+#### Summary
 
-
-## Serial
+So for example, sending HPA0025|20 will turn all HPs twinkling blue for 20 seconds. Or HPA0041|10 will give a cycling red effect.
 
