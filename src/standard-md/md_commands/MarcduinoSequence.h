@@ -1,7 +1,13 @@
 ////////////////
 
-MARCDUINO_ACTION(StopSequence, :SE00, ({
-}))
+MARCDUINO_ANIMATION(StopSequence, :SE00)
+{
+    DO_START()
+    DO_RESET({
+        resetSequence();
+    })
+    DO_END()
+}
 
 ////////////////
 
