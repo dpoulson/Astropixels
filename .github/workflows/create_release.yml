@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        environment: [standard, imperial, r2kt] # <-- Add your environments here
+        environment: [standard, imperial, r2kt, standard-md] # <-- Add your environments here
 
     steps:
       - name: Checkout repository

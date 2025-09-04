@@ -1,0 +1,19 @@
+{
+    "name": "AstroPixels",
+    "version": "v1.0.1",
+    "funding_url": "https://esphome.io/guides/supporters.html",
+    "new_install_prompt_erase": false,
+    "new_install_improv_wait_time": 5,
+    "builds": [
+        {
+            "chipFamily": "ESP32",
+            "parts": [
+                {
+                    "path": "../standard-md.bin/standard-md.bin",
+                    "offset": 0
+                }
+            ]
+        }
+    ],
+    "manifest_name": "standard-md-manifest.json"
+}

@@ -62,12 +62,12 @@ These effect the transition of the hues.
 ### PAL
 There are 5 palettes to currently choose from.
 
-0 – Default front colours
-1 – Default rear colours
-2 – Monotone red
-3 – Dual colour red and yellow
-4 – blue and red
-5 – yellow and green
+* 0 – Default front colours
+* 1 – Default rear colours
+* 2 – Monotone red
+* 3 – Dual colour red and yellow
+* 4 – blue and red
+* 5 – yellow and green
 
 ### BRI
 This is just the brightness of the display as a value between 0 and 255. The defaults are normally ok but you can tweak them. Beware of both heat and power consumption if you raise it too high.

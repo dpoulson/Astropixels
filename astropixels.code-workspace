@@ -12,7 +12,17 @@
             "istream": "cpp",
             "ostream": "cpp",
             "*.tcc": "cpp",
-            "algorithm": "cpp"
+            "algorithm": "cpp",
+            "array": "cpp",
+            "deque": "cpp",
+            "string": "cpp",
+            "unordered_map": "cpp",
+            "unordered_set": "cpp",
+            "vector": "cpp",
+            "string_view": "cpp",
+            "memory": "cpp",
+            "random": "cpp",
+            "initializer_list": "cpp"
         }
     }
 }
