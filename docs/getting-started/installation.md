@@ -19,15 +19,18 @@ Joel Joannisse has also done some fantastic printable bezels that can be done wi
 Here is what Joel says: 
 
 ```
-Here are the Astropixels logic display with diffuser I been working on. It is for the MK4 dome. The difference here is that 
-you screw the Astropixels board to the locking bar (using M3 6mm screws) of the Rear logic display instead of the RLD board it self. 
+Here are the Astropixels logic display with diffuser I been working on. It is for the 
+MK4 dome. The difference here is that you screw the Astropixels board to the locking 
+bar (using M3 6mm screws) of the Rear logic display instead of the RLD board it self. 
 
-It's a multicolor print but its a single filament swap after the first layer. I use PETG (Transparent for the first 
-layer, dark blue or black for the rest). You will need to use a 0.4 nozzle and print at 0.2 layer height. I print 
-mine a bit hotter (265c) and print the first layer at 30mm/s. I included my Bambu Studio file with those settings. 
+It's a multicolor print but its a single filament swap after the first layer. I use 
+PETG (Transparent for the first layer, dark blue or black for the rest). You will need 
+ use a 0.4 nozzle and print at 0.2 layer height. I print mine a bit hotter (265c) and 
+ print the first layer at 30mm/s. I included my Bambu Studio file with those settings. 
 
-IMPORTANT. The bezel fits really snug over the LEDs but you could apply pressure on them if your screws are too tight. 
-Turn your screw just tight enough so that nothing moves and you are good. 
+IMPORTANT. The bezel fits really snug over the LEDs but you could apply pressure on 
+them if your screws are too tight. Turn your screw just tight enough so that nothing 
+moves and you are good. 
 ```
 
 ## Spacers
