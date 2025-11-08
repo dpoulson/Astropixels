@@ -15,6 +15,7 @@
 * [Setting Up (Arduino)](advanced/environment-arduino.md)
 * [Setting Up (Platform IO)](advanced/environment-platformio.md)
 * [Changing Colors](advanced/colours.md)
+* [HoloProjectors](advanced/hp.md)
 * [Interfacing](advanced/interfacing.md)
 * [AstroPixelsPlus](advanced/app.md)
 * [Marcduino](advanced/marcduino.md)
