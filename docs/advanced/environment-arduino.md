@@ -13,7 +13,11 @@ The neopixel library can be installed as per a standard module in the IDE. The R
 
 ## Installing ReelTwo
 
-Go to [ReelTwo repository](https://github.com/reeltwo/Reeltwo), and click the big green 'Code' button. There should be an option to download a zip file.
+Go to [ReelTwo repository](https://github.com/dpoulson/Reeltwo), and click the big green 'Code' button. There should be an option to download a zip file. 
+
+{% hint style="info" %}
+This is a fork of the original repository due to a long standing bug that meant it would not compile. I've since reverted the change that caused it, along with adding a few extra functions.
+{% endhint %}
 
 With that downloaded you need to find your Arduino libraries directory. This is different on various version and operating systems. If you go to File->Preferences then you should see Sketchbook Location. The libraries directory is under that folder. 
 
