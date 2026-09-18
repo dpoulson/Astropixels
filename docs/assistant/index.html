@@ -5,7 +5,7 @@
     <title>AstroPixels AI Support Assistant</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Interactive AI Technical Assistant for AstroPixels dome lighting kit builders." />
-    <link rel="stylesheet" href="../assets/css/chat-widget.css" />
+    <link rel="stylesheet" href="../assets/css/chat-widget.css" id="ap-chat-css" />
     <style>
       :root {
         --bg-color: #0d1117;
@@ -59,6 +59,7 @@
       }
       #chat-wrapper {
         flex: 1;
+        min-height: 0;
         max-width: 900px;
         width: 100%;
         margin: 0 auto;
@@ -68,12 +69,21 @@
         box-sizing: border-box;
         overflow: hidden;
       }
+      #ap-chat-root {
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+      }
       /* Expand the widget panel to fill container nicely in full-page mode */
       #ap-chat-root #ap-chat-window {
         display: flex !important;
         position: static !important;
         width: 100% !important;
         height: 100% !important;
+        min-height: 0 !important;
         max-width: none !important;
         max-height: none !important;
         opacity: 1 !important;

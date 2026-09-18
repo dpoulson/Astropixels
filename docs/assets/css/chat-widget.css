@@ -111,11 +111,29 @@
 
 .ap-messages {
   flex: 1;
+  min-height: 0;
   padding: 16px;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   display: flex;
   flex-direction: column;
   gap: 12px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ap-border) transparent;
+}
+
+.ap-messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ap-messages::-webkit-scrollbar-thumb {
+  background: var(--ap-border);
+  border-radius: 4px;
+}
+
+.ap-messages::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .ap-msg {
