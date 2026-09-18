@@ -4,3 +4,32 @@
 .vscode/launch.json
 .vscode/ipch
 .playwright-mcp/
+
+# Cloudflare Wrangler cache & outputs
+.wrangler/
+**/.wrangler/
+
+# Environment variables & secrets
+.env
+.env.*
+*.pem
+*.key
+
+# Editor and merge backups
+*.orig
+*.bak
+*.swp
+*.swo
+*~
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Node dependencies
+node_modules/
+npm-debug.log*
+
+# OS metadata
+.DS_Store
+Thumbs.db
