@@ -126,7 +126,7 @@
         </div>
       </div>
       <div class="ap-input-area">
-        <input type="text" id="ap-input" placeholder="Enter transmission or query..." autocomplete="off" />
+        <input type="text" id="ap-input" placeholder="Enter transmission or query..." maxlength="500" autocomplete="off" />
         <button class="ap-send-btn" id="ap-send-btn">
           <span>SEND</span>
           <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">

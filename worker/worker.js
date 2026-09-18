@@ -1,10 +1,25 @@
 import { DOCS_CONTEXT } from "./docs_context.js";
 
-const CORS_HEADERS = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "POST, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type",
-};
+const ALLOWED_ORIGINS = [
+  "https://dpoulson.github.io",
+  "https://astropixels.gitbook.io"
+];
+
+function isAllowedOrigin(origin) {
+  if (!origin) return true; // Allow direct CLI/testing
+  return ALLOWED_ORIGINS.some((allowed) => origin.startsWith(allowed)) ||
+         origin.includes("localhost") ||
+         origin.includes("127.0.0.1");
+}
+
+function getCorsHeaders(origin) {
+  const allowOrigin = isAllowedOrigin(origin) && origin ? origin : ALLOWED_ORIGINS[0];
+  return {
+    "Access-Control-Allow-Origin": allowOrigin,
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+  };
+}
 
 // In-memory simple IP rate limiter (resets when worker restarts)
 const ipRequestCounts = new Map();
@@ -33,7 +48,9 @@ Your job is to assist builders with wiring, power requirements, troubleshooting,
 
 ### Guidelines & Rules:
 1. Always be concise, helpful, and technically accurate.
-2. When answering troubleshooting queries, always consider the most common builder pitfalls:
+2. STRICT SCOPE ENFORCEMENT: You ONLY answer questions directly related to AstroPixels, 1:1 Astromech droids, ReelTwo, and dome electronics. If a user asks for general programming (Python, Java, web dev), creative writing, non-droid math, or general trivia, immediately refuse:
+   "Beep-boop! ⚠️ My telemetry is strictly calibrated to assist with AstroPixels dome lighting, wiring, power, and ReelTwo firmware queries."
+3. When answering troubleshooting queries, always consider the most common builder pitfalls:
    - Aluminium short circuits: If no lights turn on (not even the red ESP32 LED) and voltage collapses, warn them that solder joints may be touching the bare aluminium dome/bezel. Recommend nylon standoffs and Kapton/insulation tape.
    - Partial lighting / First few LEDs lit (Dead pixel): WS2812B LEDs are wired in series like a bucket brigade. If a board only lights up the first few pixels (e.g., 5 LEDs lit and everything after is dark), pixel #6 is damaged and cannot relay data to the rest of the board. This cannot be fixed via code/firmware. It requires a replacement PCB; advise the builder to take a clear photo and contact Darren at We Make Things for a warranty replacement board.
    - Daisy-chaining Front Logics (FLD): The two FLD boards must be chained (Motherboard -> Top FLD IN, Top FLD OUT -> Bottom FLD IN).
@@ -41,8 +58,8 @@ Your job is to assist builders with wiring, power requirements, troubleshooting,
    - Grounding: A common ground wire is mandatory between AstroPixels and any external controller (Marcduino, sound board, etc.).
    - Power: Recommend regulated 5.0V with at least 2A capacity (e.g. Pololu buck converter inside the dome). Warn against relying on the fragile USB-C connector in the finished droid.
    - Home Depot R2-D2: Emphasize that the kit does NOT fit the undersized Home Depot model without severe destructive hacking, and cannot be returned if purchased for it.
-3. When providing code, use accurate ReelTwo dome functions and constants (e.g., AstroPixelRLD, AstroPixelFLD, AstroPixelFrontPSI, HoloLights, LogicEngineDefaults::NORMAL, LogicEngineDefaults::ALARM, etc.).
-4. Format code snippets cleanly in C++ markdown blocks.
+4. When providing code, use accurate ReelTwo dome functions and constants (e.g., AstroPixelRLD, AstroPixelFLD, AstroPixelFrontPSI, HoloLights, LogicEngineDefaults::NORMAL, LogicEngineDefaults::ALARM, etc.).
+5. Format code snippets cleanly in C++ markdown blocks.
 
 ### Complete AstroPixels Documentation & Knowledge Base:
 ${DOCS_CONTEXT}
@@ -50,16 +67,27 @@ ${DOCS_CONTEXT}
 
 export default {
   async fetch(request, env, ctx) {
+    const origin = request.headers.get("Origin") || "";
+    const corsHeaders = getCorsHeaders(origin);
+
     // Handle CORS preflight
     if (request.method === "OPTIONS") {
-      return new Response(null, { headers: CORS_HEADERS });
+      return new Response(null, { headers: corsHeaders });
     }
 
     if (request.method !== "POST") {
       return new Response(JSON.stringify({ error: "Method not allowed" }), {
         status: 405,
-        headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
+    }
+
+    // Origin domain check
+    if (origin && !isAllowedOrigin(origin)) {
+      return new Response(
+        JSON.stringify({ error: "Unauthorized domain." }),
+        { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
     }
 
     // Rate limiting
@@ -67,7 +95,7 @@ export default {
     if (isRateLimited(clientIP)) {
       return new Response(
         JSON.stringify({ error: "Rate limit exceeded. Please wait a moment before asking another question." }),
-        { status: 429, headers: { ...CORS_HEADERS, "Content-Type": "application/json" } }
+        { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
@@ -75,7 +103,7 @@ export default {
     if (!apiKey) {
       return new Response(
         JSON.stringify({ error: "Server configuration error: GEMINI_API_KEY is not set." }),
-        { status: 500, headers: { ...CORS_HEADERS, "Content-Type": "application/json" } }
+        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
@@ -84,15 +112,31 @@ export default {
       if (!messages || !Array.isArray(messages) || messages.length === 0) {
         return new Response(JSON.stringify({ error: "Invalid request: 'messages' array is required." }), {
           status: 400,
-          headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
 
+      // Input character length check (Pre-API guardrail to save tokens)
+      const lastMessage = messages[messages.length - 1];
+      const queryText = (lastMessage?.content || "").trim();
+      if (!queryText) {
+        return new Response(JSON.stringify({ error: "Message cannot be empty." }), {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      if (queryText.length > 500) {
+        return new Response(
+          JSON.stringify({ error: "Transmission exceeds 500 character limit. Please keep questions concise." }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+
       // Format messages for Gemini API
-      // Only keep the last 8 messages to stay fast and responsive
-      const history = messages.slice(-8).map((m) => ({
+      // Keep only the last 4 messages to save context tokens
+      const history = messages.slice(-4).map((m) => ({
         role: m.role === "assistant" || m.role === "model" ? "model" : "user",
-        parts: [{ text: m.content || "" }],
+        parts: [{ text: (m.content || "").slice(0, 500) }],
       }));
 
       const model = env.GEMINI_MODEL || "gemini-3.6-flash";
@@ -105,7 +149,7 @@ export default {
         contents: history,
         generationConfig: {
           temperature: 0.2,
-          maxOutputTokens: 2048,
+          maxOutputTokens: 800,
         },
       };
 
@@ -127,7 +171,7 @@ export default {
         } catch (_) {}
         return new Response(
           JSON.stringify({ error: errorMsg }),
-          { status: 502, headers: { ...CORS_HEADERS, "Content-Type": "application/json" } }
+          { status: 502, headers: { ...corsHeaders, "Content-Type": "application/json" } }
         );
       }
 
@@ -137,13 +181,13 @@ export default {
 
       return new Response(JSON.stringify({ reply }), {
         status: 200,
-        headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     } catch (err) {
       console.error("Worker error:", err);
       return new Response(JSON.stringify({ error: err.message || "Internal server error" }), {
         status: 500,
-        headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
   },
