@@ -55,6 +55,9 @@ Whether you are looking for a simple plug-and-play installation or seeking deep 
 * [HoloProjectors](advanced/hp.md) &mdash; Configure HP twitch timings, colors, and sequences.
 * [Serial & I2C Interfacing](advanced/interfacing.md) &mdash; Command reference for triggering effects on the fly.
 * [Marcduino Integration](advanced/marcduino.md) &mdash; Connect and trigger dome lights directly from Marcduino controllers.
+* [Web Firmware Flasher](https://dpoulson.github.io/Astropixels/firmware/) &mdash; Flash official firmware releases directly from your browser.
+* [Interactive AI Support Assistant](https://dpoulson.github.io/Astropixels/assistant/) &mdash; Instant technical assistance for wiring, troubleshooting, and code.
+* [ReelTwo C++ API Reference](advanced/reeltwo-api.md) &mdash; Detailed C++ classes, methods, constants, and comms architectures.
 * [Troubleshooting](troubleshooting/basics.md) &mdash; Step-by-step diagnostic guide for common issues.
 * [FAQ](faq/general.md) &mdash; Frequently asked questions regarding sizing, shipping, and design.
 
