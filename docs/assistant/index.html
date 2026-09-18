@@ -69,12 +69,16 @@
         overflow: hidden;
       }
       /* Expand the widget panel to fill container nicely in full-page mode */
-      #ap-chat-root #ap-chat-panel {
+      #ap-chat-root #ap-chat-window {
         display: flex !important;
         position: static !important;
         width: 100% !important;
         height: 100% !important;
+        max-width: none !important;
         max-height: none !important;
+        opacity: 1 !important;
+        pointer-events: all !important;
+        transform: none !important;
         border-radius: 12px;
         border: 1px solid var(--border-color);
         box-shadow: 0 8px 24px rgba(0,0,0,0.4);
@@ -82,7 +86,7 @@
       #ap-chat-root #ap-chat-toggle {
         display: none !important;
       }
-      #ap-chat-root #ap-chat-close {
+      #ap-chat-root .ap-close-btn {
         display: none !important;
       }
     </style>
