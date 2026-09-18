@@ -22,7 +22,7 @@ The quickest way to restore factory firmware without installing development soft
 
 1. Unplug main 5V power from the screw terminals.
 2. Connect the ESP32 to your computer using a USB-C data cable.
-3. Open the [AstroPixels Web Installer](https://dpoulson.github.io/Astropixels/) in Google Chrome, Edge, or Brave.
+3. Open the [AstroPixels Web Installer](https://dpoulson.github.io/Astropixels/firmware/) in Google Chrome, Edge, or Brave.
 4. Select the **Standard** radio button.
 5. Click **INSTALL**, select your ESP32's COM port, and confirm the installation.
 6. The installer will completely wipe the flash memory and reinstall the clean factory binary.

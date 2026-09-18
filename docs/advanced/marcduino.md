@@ -26,7 +26,7 @@ Marcduino Output (Slave / Aux Port)               AstroPixels Motherboard (Seria
 
 ## 2. Firmware Requirement
 
-To enable the Marcduino command parser, install the **`standard-md`** firmware flavor using our [Web Installer](https://dpoulson.github.io/Astropixels/).
+To enable the Marcduino command parser, install the **`standard-md`** firmware flavor using our [Web Installer](https://dpoulson.github.io/Astropixels/firmware/).
 
 ---
 

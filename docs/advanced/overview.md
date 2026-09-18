@@ -44,7 +44,7 @@ If your USB port is accidentally damaged or the board fails, you do **not** need
 **Do Not Use 38-pin ESP32 Modules:** Ensure any replacement board is the **30-pin** layout. The larger 38-pin variants will not fit the motherboard header socket!
 {% endhint %}
 
-Once socketed, simply plug the board into your computer and use our [Web Installer](https://dpoulson.github.io/Astropixels/) to flash the latest firmware in 30 seconds.
+Once socketed, simply plug the board into your computer and use our [Web Installer](https://dpoulson.github.io/Astropixels/firmware/) to flash the latest firmware in 30 seconds.
 
 ---
 

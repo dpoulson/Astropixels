@@ -32,7 +32,7 @@ The kit includes a dedicated 12-cable servo-style wiring harness (Signal, Voltag
 <figure><img src="https://we-make-things.co.uk/wp-content/uploads/2024/04/PXL_20240409_233712368-scaled.jpg" alt="AstroPixels Complete Kit Contents"><figcaption>Complete AstroPixels Kit: Motherboard, RLD, dual FLDs, dual PSIs, three HPs, and full wiring harness.</figcaption></figure>
 
 {% hint style="info" %}
-**Spare Parts & Replacements:** The ESP32 is a standard 30-pin dev module (NodeMCU-32S layout with USB-C). If you ever damage the USB-C connector or board during physical installation, replacement 30-pin ESP32 boards can be purchased anywhere and flashed via our [Web Installer](https://dpoulson.github.io/Astropixels/).
+**Spare Parts & Replacements:** The ESP32 is a standard 30-pin dev module (NodeMCU-32S layout with USB-C). If you ever damage the USB-C connector or board during physical installation, replacement 30-pin ESP32 boards can be purchased anywhere and flashed via our [Web Installer](https://dpoulson.github.io/Astropixels/firmware/).
 {% endhint %}
 
 

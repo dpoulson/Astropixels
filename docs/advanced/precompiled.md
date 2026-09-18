@@ -20,16 +20,16 @@ You do not need to install any IDE, compilers, or coding tools to customize or r
 
 You can flash any of the above firmware builds directly over USB using the **AstroPixels Web Installer**:
 
-### [Launch AstroPixels Web Installer](https://dpoulson.github.io/Astropixels/)
+### [Launch AstroPixels Web Installer](https://dpoulson.github.io/Astropixels/firmware/)
+*(Requires a Web Serial compatible browser: Google Chrome, Microsoft Edge, Brave, or Opera on desktop)*
 
-### Prerequisites:
-1. A Chromium-based browser supporting the **Web Serial API**: Google Chrome, Microsoft Edge, Opera, or Brave.
-2. A standard USB-C data cable (ensure it is a genuine data cable, not a power-only charging cord).
+---
 
-### Step-by-Step Flashing Procedure:
-1. Disconnect main 5V power from the screw terminals.
-2. Connect your computer to the ESP32 using a USB-C cable.
-3. Open the [AstroPixels Web Installer](https://dpoulson.github.io/Astropixels/).
+## 2. Web Flashing Instructions
+
+1. Connect your AstroPixels ESP32 module to your computer via a quality **USB-C data cable**.
+2. Put the board into bootloader mode: **Hold down the BOOT button, click the EN (Reset) button once, and release BOOT**.
+3. Open the [AstroPixels Web Installer](https://dpoulson.github.io/Astropixels/firmware/).
 4. Select your desired firmware flavor (e.g., *Standard with MD support*).
 5. Click the blue **INSTALL** button.
 6. A browser popup will appear listing available USB serial ports. Select your ESP32 device (typically labeled *CP2102 USB to UART Bridge Controller* or *USB-SERIAL CH340*) and click **Connect**.
