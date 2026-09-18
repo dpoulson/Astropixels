@@ -24,6 +24,7 @@
 ## Diagnostics & Recovery
 
 * [Diagnostic & Troubleshooting Guide](troubleshooting/basics.md)
+* [Interactive AI Technical Assistant](https://dpoulson.github.io/Astropixels/assistant/)
 * [Factory Reset & Recovery](troubleshooting/original_firmware.md)
 
 ## Frequently Asked Questions

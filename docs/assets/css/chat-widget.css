@@ -1,0 +1,234 @@
+/* AstroPixels AI Chat Widget Styling */
+:root {
+  --ap-blue: #0088cc;
+  --ap-blue-dark: #006699;
+  --ap-red: #e02424;
+  --ap-bg: #1e1e24;
+  --ap-card-bg: #282830;
+  --ap-text: #f0f0f5;
+  --ap-text-muted: #9999aa;
+  --ap-border: #3c3c48;
+}
+
+#ap-chat-toggle {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--ap-blue), var(--ap-blue-dark));
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 16px rgba(0, 136, 204, 0.4);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#ap-chat-toggle:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 20px rgba(0, 136, 204, 0.6);
+}
+
+#ap-chat-toggle svg {
+  width: 28px;
+  height: 28px;
+  fill: currentColor;
+}
+
+#ap-chat-window {
+  position: fixed;
+  bottom: 96px;
+  right: 24px;
+  width: 380px;
+  height: 560px;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100vh - 120px);
+  background: var(--ap-bg);
+  border: 1px solid var(--ap-border);
+  border-radius: 16px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 99999;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px) scale(0.96);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+#ap-chat-window.ap-open {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0) scale(1);
+}
+
+.ap-header {
+  background: var(--ap-card-bg);
+  border-bottom: 1px solid var(--ap-border);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ap-header-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ap-text);
+}
+
+.ap-header-status {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+}
+
+.ap-close-btn {
+  background: transparent;
+  border: none;
+  color: var(--ap-text-muted);
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+  padding: 4px;
+}
+
+.ap-close-btn:hover {
+  color: var(--ap-text);
+}
+
+.ap-messages {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ap-msg {
+  max-width: 88%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 13.5px;
+  line-height: 1.45;
+  word-break: break-word;
+}
+
+.ap-msg-user {
+  align-self: flex-end;
+  background: var(--ap-blue);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+
+.ap-msg-assistant {
+  align-self: flex-start;
+  background: var(--ap-card-bg);
+  color: var(--ap-text);
+  border: 1px solid var(--ap-border);
+  border-bottom-left-radius: 4px;
+}
+
+.ap-msg pre {
+  background: #141418;
+  border: 1px solid var(--ap-border);
+  padding: 8px 10px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 12px;
+  margin: 6px 0;
+}
+
+.ap-msg code {
+  font-family: monospace;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1px 4px;
+  border-radius: 4px;
+}
+
+.ap-msg pre code {
+  background: transparent;
+  padding: 0;
+}
+
+.ap-starters {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.ap-starter-btn {
+  background: rgba(0, 136, 204, 0.12);
+  color: #58b9f0;
+  border: 1px solid rgba(0, 136, 204, 0.3);
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s ease;
+}
+
+.ap-starter-btn:hover {
+  background: rgba(0, 136, 204, 0.25);
+}
+
+.ap-input-area {
+  padding: 12px 14px;
+  background: var(--ap-card-bg);
+  border-top: 1px solid var(--ap-border);
+  display: flex;
+  gap: 8px;
+}
+
+.ap-input-area input {
+  flex: 1;
+  background: var(--ap-bg);
+  border: 1px solid var(--ap-border);
+  color: var(--ap-text);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  outline: none;
+}
+
+.ap-input-area input:focus {
+  border-color: var(--ap-blue);
+}
+
+.ap-send-btn {
+  background: var(--ap-blue);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0 14px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  transition: opacity 0.15s ease;
+}
+
+.ap-send-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ap-typing {
+  font-style: italic;
+  color: var(--ap-text-muted);
+  font-size: 12px;
+}

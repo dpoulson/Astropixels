@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>AstroPixels AI Support Assistant</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Interactive AI Technical Assistant for AstroPixels dome lighting kit builders." />
+    <link rel="stylesheet" href="../assets/css/chat-widget.css" />
+    <style>
+      :root {
+        --bg-color: #0d1117;
+        --card-bg: #161b22;
+        --border-color: #30363d;
+        --text-color: #c9d1d9;
+        --text-heading: #58a6ff;
+        --accent: #1f6feb;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        overflow: hidden;
+      }
+      header {
+        background-color: var(--card-bg);
+        border-bottom: 1px solid var(--border-color);
+        padding: 14px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 600;
+        font-size: 1.15rem;
+        color: #fff;
+      }
+      .brand svg {
+        width: 24px;
+        height: 24px;
+        fill: var(--text-heading);
+      }
+      .nav-links a {
+        color: #8b949e;
+        text-decoration: none;
+        margin-left: 16px;
+        font-size: 0.9rem;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover {
+        color: var(--text-heading);
+      }
+      #chat-wrapper {
+        flex: 1;
+        max-width: 900px;
+        width: 100%;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        box-sizing: border-box;
+        overflow: hidden;
+      }
+      /* Expand the widget panel to fill container nicely in full-page mode */
+      #ap-chat-root #ap-chat-panel {
+        display: flex !important;
+        position: static !important;
+        width: 100% !important;
+        height: 100% !important;
+        max-height: none !important;
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+      }
+      #ap-chat-root #ap-chat-toggle {
+        display: none !important;
+      }
+      #ap-chat-root #ap-chat-close {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="brand">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2M7.5 13A2.5 2.5 0 0 0 5 15.5 2.5 2.5 0 0 0 7.5 18 2.5 2.5 0 0 0 10 15.5 2.5 2.5 0 0 0 7.5 13m9 0a2.5 2.5 0 0 0-2.5 2.5 2.5 2.5 0 0 0 2.5 2.5 2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-2.5-2.5Z"/>
+        </svg>
+        AstroPixels AI Support Assistant
+      </div>
+      <div class="nav-links">
+        <a href="../firmware/">Web Firmware Flasher</a>
+        <a href="https://astropixels.gitbook.io/astropixels" target="_blank" rel="noopener">Documentation</a>
+        <a href="https://github.com/dpoulson/Astropixels" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </header>
+
+    <div id="chat-wrapper"></div>
+
+    <script>
+      window.ASTROPIXELS_AI_ENDPOINT = "https://astropixels-ai-assistant.wemakethings.workers.dev";
+    </script>
+    <script src="../assets/js/chat-widget.js"></script>
+    <script>
+      // Move chat root inside dedicated page container
+      document.addEventListener("DOMContentLoaded", () => {
+        const root = document.getElementById("ap-chat-root");
+        const wrapper = document.getElementById("chat-wrapper");
+        if (root && wrapper) {
+          wrapper.appendChild(root);
+        }
+      });
+    </script>
+  </body>
+</html>

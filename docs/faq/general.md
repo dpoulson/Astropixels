@@ -10,7 +10,7 @@ It took several months and multiple prototyping iterations to produce the first 
 AstroPixels is a community-first passion project. Over the years, I've benefited immensely from the knowledge, 3D models, and open-source designs freely shared by other Astromech builders. AstroPixels is my way of giving back to new and veteran builders alike. I do not run this as a high-margin commercial enterprise; pricing covers bulk manufacturing costs, replacement spares, and a £10 charity contribution from every set.
 
 ### Will AstroPixels fit into the animatronic Home Depot R2-D2?
-**No.** The Home Depot yard animatronic R2-D2 is not a 1:1 full-scale replica; its dome openings and bezels are substantially smaller than screen-accurate club dimensions. While a few builders have shoehorned parts of the kit in using aggressive Dremel surgery, AstroPixels is neither designed nor intended for that model.
+**Yes and No.** The Home Depot yard animatronic R2-D2 is not a 1:1 full-scale replica; its dome openings and bezels are substantially smaller than screen-accurate club dimensions. While a few builders have shoehorned parts of the kit in using aggressive Dremel surgery, AstroPixels is neither designed nor intended for that model.
 
 ### Will you produce a miniature version for the Home Depot R2-D2?
 Almost certainly no. Keeping up with worldwide demand from full-scale 1:1 builders takes all available workshop capacity, and the Home Depot prop is not commercially distributed in the UK.

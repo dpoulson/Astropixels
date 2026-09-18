@@ -2,6 +2,9 @@
 
 If your AstroPixels kit is not behaving as expected, follow this systematic diagnostic guide. In 95% of cases, issues stem from cable polarity, power supply sag, or missing ground wires.
 
+> [!TIP]
+> **Need interactive help?** Ask our [Interactive AI Support Assistant](https://dpoulson.github.io/Astropixels/assistant/) for step-by-step troubleshooting recommendations based on your symptoms.
+
 ---
 
 ## Diagnostic Matrix
