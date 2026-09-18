@@ -95,7 +95,7 @@ export default {
         parts: [{ text: m.content || "" }],
       }));
 
-      const model = env.GEMINI_MODEL || "gemini-2.5-flash";
+      const model = env.GEMINI_MODEL || "gemini-3.6-flash";
       const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
       const payload = {
@@ -118,8 +118,15 @@ export default {
       if (!geminiRes.ok) {
         const errorText = await geminiRes.text();
         console.error("Gemini API Error:", errorText);
+        let errorMsg = `Upstream AI error (${geminiRes.status})`;
+        try {
+          const parsed = JSON.parse(errorText);
+          if (parsed.error && parsed.error.message) {
+            errorMsg += `: ${parsed.error.message}`;
+          }
+        } catch (_) {}
         return new Response(
-          JSON.stringify({ error: `Upstream AI error (${geminiRes.status}). Please try again shortly.` }),
+          JSON.stringify({ error: errorMsg }),
           { status: 502, headers: { ...CORS_HEADERS, "Content-Type": "application/json" } }
         );
       }
