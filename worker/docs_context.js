@@ -85,6 +85,7 @@ Whether you are looking for a simple plug-and-play installation or seeking deep 
 ## Diagnostics & Recovery
 
 * [Diagnostic & Troubleshooting Guide](troubleshooting/basics.md)
+* [Interactive AI Technical Assistant](https://dpoulson.github.io/Astropixels/assistant/)
 * [Factory Reset & Recovery](troubleshooting/original_firmware.md)
 
 ## Frequently Asked Questions
@@ -714,7 +715,7 @@ Marcduino Output (Slave / Aux Port)               AstroPixels Motherboard (Seria
 
 ## 2. Firmware Requirement
 
-To enable the Marcduino command parser, install the **\`standard-md\`** firmware flavor using our [Web Installer](https://dpoulson.github.io/Astropixels/).
+To enable the Marcduino command parser, install the **\`standard-md\`** firmware flavor using our [Web Installer](https://dpoulson.github.io/Astropixels/firmware/).
 
 ---
 
@@ -840,7 +841,7 @@ If your USB port is accidentally damaged or the board fails, you do **not** need
 **Do Not Use 38-pin ESP32 Modules:** Ensure any replacement board is the **30-pin** layout. The larger 38-pin variants will not fit the motherboard header socket!
 {% endhint %}
 
-Once socketed, simply plug the board into your computer and use our [Web Installer](https://dpoulson.github.io/Astropixels/) to flash the latest firmware in 30 seconds.
+Once socketed, simply plug the board into your computer and use our [Web Installer](https://dpoulson.github.io/Astropixels/firmware/) to flash the latest firmware in 30 seconds.
 
 ---
 
@@ -898,16 +899,16 @@ You do not need to install any IDE, compilers, or coding tools to customize or r
 
 You can flash any of the above firmware builds directly over USB using the **AstroPixels Web Installer**:
 
-### [Launch AstroPixels Web Installer](https://dpoulson.github.io/Astropixels/)
+### [Launch AstroPixels Web Installer](https://dpoulson.github.io/Astropixels/firmware/)
+*(Requires a Web Serial compatible browser: Google Chrome, Microsoft Edge, Brave, or Opera on desktop)*
 
-### Prerequisites:
-1. A Chromium-based browser supporting the **Web Serial API**: Google Chrome, Microsoft Edge, Opera, or Brave.
-2. A standard USB-C data cable (ensure it is a genuine data cable, not a power-only charging cord).
+---
 
-### Step-by-Step Flashing Procedure:
-1. Disconnect main 5V power from the screw terminals.
-2. Connect your computer to the ESP32 using a USB-C cable.
-3. Open the [AstroPixels Web Installer](https://dpoulson.github.io/Astropixels/).
+## 2. Web Flashing Instructions
+
+1. Connect your AstroPixels ESP32 module to your computer via a quality **USB-C data cable**.
+2. Put the board into bootloader mode: **Hold down the BOOT button, click the EN (Reset) button once, and release BOOT**.
+3. Open the [AstroPixels Web Installer](https://dpoulson.github.io/Astropixels/firmware/).
 4. Select your desired firmware flavor (e.g., *Standard with MD support*).
 5. Click the blue **INSTALL** button.
 6. A browser popup will appear listing available USB serial ports. Select your ESP32 device (typically labeled *CP2102 USB to UART Bridge Controller* or *USB-SERIAL CH340*) and click **Connect**.
@@ -946,7 +947,7 @@ It took several months and multiple prototyping iterations to produce the first 
 AstroPixels is a community-first passion project. Over the years, I've benefited immensely from the knowledge, 3D models, and open-source designs freely shared by other Astromech builders. AstroPixels is my way of giving back to new and veteran builders alike. I do not run this as a high-margin commercial enterprise; pricing covers bulk manufacturing costs, replacement spares, and a £10 charity contribution from every set.
 
 ### Will AstroPixels fit into the animatronic Home Depot R2-D2?
-**No.** The Home Depot yard animatronic R2-D2 is not a 1:1 full-scale replica; its dome openings and bezels are substantially smaller than screen-accurate club dimensions. While a few builders have shoehorned parts of the kit in using aggressive Dremel surgery, AstroPixels is neither designed nor intended for that model.
+**Yes and No.** The Home Depot yard animatronic R2-D2 is not a 1:1 full-scale replica; its dome openings and bezels are substantially smaller than screen-accurate club dimensions. While a few builders have shoehorned parts of the kit in using aggressive Dremel surgery, AstroPixels is neither designed nor intended for that model.
 
 ### Will you produce a miniature version for the Home Depot R2-D2?
 Almost certainly no. Keeping up with worldwide demand from full-scale 1:1 builders takes all available workshop capacity, and the Home Depot prop is not commercially distributed in the UK.
@@ -1123,7 +1124,7 @@ The kit includes a dedicated 12-cable servo-style wiring harness (Signal, Voltag
 <figure><img src="https://we-make-things.co.uk/wp-content/uploads/2024/04/PXL_20240409_233712368-scaled.jpg" alt="AstroPixels Complete Kit Contents"><figcaption>Complete AstroPixels Kit: Motherboard, RLD, dual FLDs, dual PSIs, three HPs, and full wiring harness.</figcaption></figure>
 
 {% hint style="info" %}
-**Spare Parts & Replacements:** The ESP32 is a standard 30-pin dev module (NodeMCU-32S layout with USB-C). If you ever damage the USB-C connector or board during physical installation, replacement 30-pin ESP32 boards can be purchased anywhere and flashed via our [Web Installer](https://dpoulson.github.io/Astropixels/).
+**Spare Parts & Replacements:** The ESP32 is a standard 30-pin dev module (NodeMCU-32S layout with USB-C). If you ever damage the USB-C connector or board during physical installation, replacement 30-pin ESP32 boards can be purchased anywhere and flashed via our [Web Installer](https://dpoulson.github.io/Astropixels/firmware/).
 {% endhint %}
 
 === FILE: getting-started/power.md ===
@@ -1309,6 +1310,9 @@ For power supply options and permanent wiring, see [Power Requirements](power.md
 
 If your AstroPixels kit is not behaving as expected, follow this systematic diagnostic guide. In 95% of cases, issues stem from cable polarity, power supply sag, or missing ground wires.
 
+> [!TIP]
+> **Need interactive help?** Ask our [Interactive AI Support Assistant](https://dpoulson.github.io/Astropixels/assistant/) for step-by-step troubleshooting recommendations based on your symptoms.
+
 ---
 
 ## Diagnostic Matrix
@@ -1410,7 +1414,7 @@ The quickest way to restore factory firmware without installing development soft
 
 1. Unplug main 5V power from the screw terminals.
 2. Connect the ESP32 to your computer using a USB-C data cable.
-3. Open the [AstroPixels Web Installer](https://dpoulson.github.io/Astropixels/) in Google Chrome, Edge, or Brave.
+3. Open the [AstroPixels Web Installer](https://dpoulson.github.io/Astropixels/firmware/) in Google Chrome, Edge, or Brave.
 4. Select the **Standard** radio button.
 5. Click **INSTALL**, select your ESP32's COM port, and confirm the installation.
 6. The installer will completely wipe the flash memory and reinstall the clean factory binary.

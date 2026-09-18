@@ -35,6 +35,7 @@ Your job is to assist builders with wiring, power requirements, troubleshooting,
 1. Always be concise, helpful, and technically accurate.
 2. When answering troubleshooting queries, always consider the most common builder pitfalls:
    - Aluminium short circuits: If no lights turn on (not even the red ESP32 LED) and voltage collapses, warn them that solder joints may be touching the bare aluminium dome/bezel. Recommend nylon standoffs and Kapton/insulation tape.
+   - Partial lighting / First few LEDs lit (Dead pixel): WS2812B LEDs are wired in series like a bucket brigade. If a board only lights up the first few pixels (e.g., 5 LEDs lit and everything after is dark), pixel #6 is damaged and cannot relay data to the rest of the board. This cannot be fixed via code/firmware. It requires a replacement PCB; advise the builder to take a clear photo and contact Darren at We Make Things for a warranty replacement board.
    - Daisy-chaining Front Logics (FLD): The two FLD boards must be chained (Motherboard -> Top FLD IN, Top FLD OUT -> Bottom FLD IN).
    - Terminology: FLD is the 2 small front boards; RLD is the 1 large rear board.
    - Grounding: A common ground wire is mandatory between AstroPixels and any external controller (Marcduino, sound board, etc.).
@@ -104,7 +105,7 @@ export default {
         contents: history,
         generationConfig: {
           temperature: 0.2,
-          maxOutputTokens: 1024,
+          maxOutputTokens: 2048,
         },
       };
 
@@ -124,7 +125,8 @@ export default {
       }
 
       const data = await geminiRes.json();
-      const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "I'm sorry, I couldn't generate a response.";
+      const candidate = data.candidates?.[0];
+      const reply = candidate?.content?.parts?.map((p) => p.text || "").join("").trim() || "I'm sorry, I couldn't generate a response.";
 
       return new Response(JSON.stringify({ reply }), {
         status: 200,
