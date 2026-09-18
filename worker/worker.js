@@ -84,6 +84,7 @@ export default {
 
     // Origin domain check
     if (origin && !isAllowedOrigin(origin)) {
+      console.warn(JSON.stringify({ level: "WARN", event: "UNAUTHORIZED_ORIGIN", origin, clientIP }));
       return new Response(
         JSON.stringify({ error: "Unauthorized domain." }),
         { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
@@ -93,6 +94,7 @@ export default {
     // Rate limiting
     const clientIP = request.headers.get("CF-Connecting-IP") || "anonymous";
     if (isRateLimited(clientIP)) {
+      console.warn(JSON.stringify({ level: "WARN", event: "RATE_LIMITED", clientIP }));
       return new Response(
         JSON.stringify({ error: "Rate limit exceeded. Please wait a moment before asking another question." }),
         { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
@@ -126,6 +128,7 @@ export default {
         });
       }
       if (queryText.length > 500) {
+        console.warn(JSON.stringify({ level: "WARN", event: "INPUT_LIMIT_EXCEEDED", length: queryText.length, clientIP }));
         return new Response(
           JSON.stringify({ error: "Transmission exceeds 500 character limit. Please keep questions concise." }),
           { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
@@ -178,6 +181,20 @@ export default {
       const data = await geminiRes.json();
       const candidate = data.candidates?.[0];
       const reply = candidate?.content?.parts?.map((p) => p.text || "").join("").trim() || "I'm sorry, I couldn't generate a response.";
+
+      // Log structured usage data for observability
+      console.log(JSON.stringify({
+        level: "INFO",
+        timestamp: new Date().toISOString(),
+        clientIP,
+        origin: origin || "direct",
+        query: queryText,
+        tokens: {
+          prompt: data.usageMetadata?.promptTokenCount || 0,
+          candidates: data.usageMetadata?.candidatesTokenCount || 0,
+          total: data.usageMetadata?.totalTokenCount || 0,
+        },
+      }));
 
       return new Response(JSON.stringify({ reply }), {
         status: 200,
