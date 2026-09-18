@@ -20,6 +20,7 @@
 * [Developing with PlatformIO](advanced/environment-platformio.md)
 * [Compiling with Arduino IDE](advanced/environment-arduino.md)
 * [AstroPixelsPlus (WiFi & App)](advanced/app.md)
+* [ReelTwo C++ API & Comms Reference](advanced/reeltwo-api.md)
 
 ## Diagnostics & Recovery
 
