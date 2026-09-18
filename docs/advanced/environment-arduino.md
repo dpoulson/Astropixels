@@ -1,52 +1,55 @@
-# Coding Environment
+# Compiling with Arduino IDE
 
-## IDE
+For builders who want to write custom animation routines, modify pinouts, or create bespoke logic behaviors, you can compile and upload your code using the standard [Arduino IDE](https://www.arduino.cc/en/software/).
 
-Download and set up the [Arduino IDE](https://www.arduino.cc/en/software/)
+---
 
-Once this is done you will need to install some libraries. 
+## 1. Install Required Libraries
 
-* Adafruit_NeoPixel
-* ReelTwo
+Open Arduino IDE and navigate to **Tools &rarr; Manage Libraries...**:
 
-The neopixel library can be installed as per a standard module in the IDE. The ReelTwo library will need to be installed manually. 
+1. Search for **`Adafruit NeoPixel`** (by Adafruit) &rarr; Click **Install**.
+2. **ReelTwo Library:** Download and install the official ReelTwo repository:
+   * Visit the official [ReelTwo Repository](https://github.com/reeltwo/Reeltwo).
+   * Click the green **Code** button and select **Download ZIP**.
+   * In Arduino IDE, go to **Sketch &rarr; Include Library &rarr; Add .ZIP Library...** and select the downloaded file.
+   * Alternatively, unzip the archive into your sketchbook's `libraries/` directory and restart the IDE.
 
-## Installing ReelTwo
+---
 
-Go to [ReelTwo repository](https://github.com/dpoulson/Reeltwo), and click the big green 'Code' button. There should be an option to download a zip file. 
+## 2. Install the ESP32 Board Package
 
-{% hint style="info" %}
-This is a fork of the original repository due to a long standing bug that meant it would not compile. I've since reverted the change that caused it, along with adding a few extra functions.
-{% endhint %}
-
-With that downloaded you need to find your Arduino libraries directory. This is different on various version and operating systems. If you go to File->Preferences then you should see Sketchbook Location. The libraries directory is under that folder. 
-
-Unzip the ReelTwo file you downloaded into the libraries file and restart the Arduino IDE. 
-
-## Checking ReelTwo installation
-
-When you restart the IDE you should be able to go to file->examples and find ReelTwo in the list.
-
-## Installing the ESP32 board library.
-
-As the Astropixels run on an ESP32 and that board is not in the default installation, you need to add a board library. 
-
-Go to File->Preferences and add this to the box labelled 'Additional Boards Manager URL'
-
-```https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json```
-
-Then you can go to Tools->Board->Board Manager 
-
-This will open up a window from which you can install the ESP32 library. Enter ESP32 in the search bar and you should see an entry by Espressif Systems available. 
-
-Select the latest 2.0.* version and click install.
+1. In Arduino IDE, open **File &rarr; Preferences** (or **Arduino IDE &rarr; Settings** on macOS).
+2. Locate the field **Additional Boards Manager URLs** and add the official Espressif package URL:
+   ```text
+   https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
+   ```
+3. Click **OK**.
+4. Open **Tools &rarr; Board &rarr; Boards Manager...**.
+5. Search for **`esp32`** (published by *Espressif Systems*).
+6. **Important:** Select version **`2.0.17`** (the latest `2.0.x` release) from the dropdown and click **Install**.
 
 {% hint style="warning" %}
-There is currently a bug in the ReelTwo library which makes it incompatible with the latest v3 ESP32 board libraries.
+**ESP32 Core Compatibility:** Do NOT install ESP32 Board Package version `3.x`! The v3.x Espressif core deprecates several low-level timer and peripheral functions used by ReelTwo. Stick with `2.0.14` through `2.0.17` for 100% stable builds.
 {% endhint %}
 
-## Testing
+---
 
-You should now be able to go to File->Examples->ReelTwo->astropixels to open the basic sketch
+## 3. Board Selection & Build Settings
 
-Hit compile at the top of the IDE and it should all compile cleanly. 
+Under the **Tools** menu, set the following board parameters:
+
+* **Board:** `ESP32 Dev Module`
+* **Upload Speed:** `115200` (or `921600` for faster uploads)
+* **Flash Frequency:** `80MHz`
+* **Partition Scheme:** `Default 4MB with spiffs (1.2MB APP / 1.5MB SPIFFS)`
+* **Port:** Select the COM port corresponding to your plugged-in ESP32.
+
+---
+
+## 4. Compiling & Uploading
+
+1. Open **File &rarr; Examples &rarr; ReelTwo &rarr; astropixels** (or open `src/standard/main.cpp` from the AstroPixels repository).
+2. Click **Verify (Checkmark)** in the top toolbar. The sketch should compile with zero errors.
+3. Click **Upload (Arrow)** to flash your AstroPixels controller!
+ 

@@ -1,85 +1,152 @@
-# Changing Colours
+# Customising Colours & Animations
 
-The Astropixel light boards are all fully RGB and so can be customised to any colour you want.
+Because all 269 LEDs in the AstroPixels system are individually addressable WS2812B RGB pixels, you can customize any display to any color scheme, palette, speed, or startup message you desire.
 
-## PSIs
+---
 
-For the PSIs you can create a new definition. The PSIs use the LogicEngine code, the same as the main Logics.
+## 1. How the Logic Engine Configures Displays
 
+The displays (both Front/Rear Logics and Front/Rear PSIs) are configured using a `LogicEngineSettings` object passed during initialization:
+
+```cpp
+static LogicEngineSettings LogicEngineCustom(
+    fade,          // Transition fade speed (1-255)
+    hue,           // Color wheel rotation (0-255)
+    delay,         // Refresh interval delay in ms (controls animation speed)
+    palNum,        // Color palette selection (0-5)
+    bri,           // Global brightness level (0-255)
+    defaultEffect  // Default running sequence (e.g. NORMAL or PSICOLORWIPE)
+);
 ```
-LogicEngineSettings LogicEngineFrontPSICustom(
+
+### Parameter Breakdown
+
+| Parameter | Type | Default Front | Default Rear | Description |
+| :--- | :---: | :---: | :---: | :--- |
+| **`fade`** | `byte` | `1` | `3` | Determines how smoothly pixels fade between color transitions. |
+| **`hue`** | `byte` | `0` | `0` | Rotates the entire palette around the 360&deg; color wheel (`0` to `255`). |
+| **`delay`** | `byte` | `10` | `40` | Milliseconds between frame updates. Smaller values run faster; larger values run slower. |
+| **`palNum`** | `byte` | `0` | `1` | Selects which pre-defined color palette is used (see below). |
+| **`bri`** | `byte` | `160` | `140` | Master brightness (`0`–`255`). Defaults are tuned for optimal visibility while keeping total current draw under 700mA. |
+| **`defaultEffect`** | `long` | `NORMAL` | `NORMAL` | The animation pattern to run continuously. |
+
+---
+
+## 2. Built-in Palettes (`palNum`)
+
+The ReelTwo Logic Engine includes six built-in color palettes:
+
+* **`0` &mdash; Default Front:** Classic film-accurate R2-D2 front logics (white, light blue, cyan, accent red).
+* **`1` &mdash; Default Rear:** Classic film-accurate R2-D2 rear logics (white, yellow, green, accent red/blue).
+* **`2` &mdash; Monotone Red:** Ideal base for Imperial/Sith droids, or rotated via `hue` for monotone droids (e.g. pink R2-KT).
+* **`3` &mdash; Dual Color Red & Yellow:** Classic warning/industrial colors (great for Chopper / C1 droids).
+* **`4` &mdash; Dual Color Blue & Red:** Dynamic dual-tone palette.
+* **`5` &mdash; Dual Color Yellow & Green:** Auxiliary astromech colorway.
+
+---
+
+## 3. The HUE Color Wheel (`0`–`255`)
+
+The `hue` parameter shifts the entire selected palette across the 360&deg; color spectrum:
+
+$$\text{Red } (0) \longrightarrow \text{Yellow } (42) \longrightarrow \text{Green } (85) \longrightarrow \text{Cyan } (128) \longrightarrow \text{Blue } (170) \longrightarrow \text{Magenta } (213) \longrightarrow \text{Red } (255)$$
+
+For example, selecting **Palette 2 (Monotone Red)** and applying a hue rotation:
+* **`hue = 0`** &rarr; Deep Imperial Sith Red
+* **`hue = 220`** &rarr; Pastel Pink (R2-KT)
+* **`hue = 85`** &rarr; Emerald Green (Boba Fett / Astromech medic)
+* **`hue = 170`** &rarr; Deep Cobalt Blue
+
+---
+
+## 4. Customising the PSIs (Process State Indicators)
+
+By default, the Front PSI wipes Red and Blue, while the Rear PSI wipes Green and Yellow. You can customize the wipe colors by passing a different secondary color into `LogicEngineDefaults::sequence()`:
+
+```cpp
+static LogicEngineSettings LogicEngineFrontPSICustom(
     LogicEngineDefaults::FRONT_FADE,
     LogicEngineDefaults::FRONT_HUE,
     LogicEngineDefaults::FRONT_DELAY,
     LogicEngineDefaults::FRONT_PSI_PAL,
-    LogicEngineDefaults::FRONT_BRI,    LogicEngineDefaults::sequence(LogicEngineDefaults::PSICOLORWIPE,LogicEngineDefaults::kRed));
+    LogicEngineDefaults::FRONT_BRI,
+    LogicEngineDefaults::sequence(
+        LogicEngineDefaults::PSICOLORWIPE, 
+        LogicEngineDefaults::kRed // Primary color
+    )
+);
 
 AstroPixelFrontPSI<> frontPSI(LogicEngineFrontPSICustom, 4);
 ```
 
-The simplest change you can make is to the colours used. This is set in the 
+### PSI Color Options Table
 
-```LogicEngineDefaults::sequence(LogicEngineDefaults::PSICOLORWIPE,LogicEngineDefaults::kRed)); ```
+| Color Constant | Primary Color | Inverted Secondary Color |
+| :--- | :--- | :--- |
+| `LogicEngineDefaults::kRed` | Red | Blue |
+| `LogicEngineDefaults::kBlue` | Blue | Red |
+| `LogicEngineDefaults::kYellow` | Yellow | Green |
+| `LogicEngineDefaults::kGreen` | Green | Yellow |
+| `LogicEngineDefaults::kCyan` | Cyan | Orange |
+| `LogicEngineDefaults::kOrange` | Orange | Cyan |
+| `LogicEngineDefaults::kPurple` | Purple | Magenta |
+| `LogicEngineDefaults::kPink` | Pink | Light Blue |
 
-section. Change the kRed to a different value.
+---
 
-<table>
-<tr><th></th><th>Primary Colour</th><th>Secondary Colour</th></tr>
-<tr><td>kRed</td><td>	Red</td><td>	Blue</td></tr>
-<tr><td>kBlue</td><td>	Blue</td><td>Red</td></tr>
-<tr><td>kYellow</td><td>	Yellow</td><td>	Green</td></tr>
-<tr><td>kGreen	</td><td>Green</td><td>	Yellow</td></tr>
-<tr><td>kCyan</td><td>Cyan</td><td>	Orange</td></tr>
-<tr><td>kOrange</td><td>	Orange	</td><td>Cyan</td></tr>
-<tr><td>kPurple</td><td>	Purple	</td><td>Magenta</td></tr>
-<tr><td>kPink</td><td>Pink	</td><td>Blue</td></tr>
-</table>
+## 5. Ready-to-Use Droid Recipes
 
-## Logics
-
-Logics are configure using a set of values much like the PSIs:
-
-```
-static LogicEngineSettings LogicEngineFLDCustom(
+### Imperial / Shadow Droid (Full Crimson Red)
+```cpp
+// Set palette 2 (monotone red) with hue 255
+static LogicEngineSettings LogicEngineImperial(
     LogicEngineDefaults::FRONT_FADE,
-    LogicEngineDefaults::FRONT_HUE,
+    255,                                // Hue
     LogicEngineDefaults::FRONT_DELAY,
-    LogicEngineDefaults::FRONT_PAL,
+    2,                                  // Monotone Red Palette
     LogicEngineDefaults::FRONT_BRI,
-    LogicEngineDefaults::sequence(LogicEngineDefaults::NORMAL));
+    LogicEngineDefaults::sequence(LogicEngineDefaults::NORMAL)
+);
+
+AstroPixelRLD<> RLD(LogicEngineImperial, 3);
+AstroPixelFLD<> FLD(LogicEngineImperial, 1);
 ```
 
-### HUE
-The hue setting rotates the selected palette around a colour wheel using a value between 0 and 255. So by combining this with a palette you can make various different colours of lights. In general the order is:
+### R2-KT (Charity Droid - Pink Theme)
+```cpp
+// Set palette 2 (monotone red) with hue 220 to shift red into pink
+static LogicEngineSettings LogicEngineR2KT(
+    LogicEngineDefaults::FRONT_FADE,
+    220,                                // Pink Hue shift
+    LogicEngineDefaults::FRONT_DELAY,
+    2,                                  // Monotone base palette
+    LogicEngineDefaults::FRONT_BRI,
+    LogicEngineDefaults::sequence(LogicEngineDefaults::NORMAL)
+);
 
-red -> yellow -> green -> cyan -> blue -> violet -> pink -> red
+AstroPixelRLD<> RLD(LogicEngineR2KT, 3);
+AstroPixelFLD<> FLD(LogicEngineR2KT, 1);
+```
 
-For instance, if you set the palette to 2 (monotone red) and then set the hue to around 220, you will get a nice R2-KT colour. Set hue to 255 for a nice red imperial look. Check the [Precompiled](precompiled.md) page for installing some custom colour firmware.
+---
 
-### DELAY and FADE
-These effect the transition of the hues.
+## 6. Custom Startup Text & Greetings
 
-### PAL
-There are 5 palettes to currently choose from.
+In `setup()`, you can customize the message, color, and scroll speed shown on the front and rear logics when your droid boots up:
 
-* 0 – Default front colours
-* 1 – Default rear colours
-* 2 – Monotone red
-* 3 – Dual colour red and yellow
-* 4 – blue and red
-* 5 – yellow and green
+```cpp
+void setup()
+{
+    REELTWO_READY();
+    SetupEvent::ready();
 
-### BRI
-This is just the brightness of the display as a value between 0 and 255. The defaults are normally ok but you can tweak them. Beware of both heat and power consumption if you raise it too high.
+    // RLD: Scroll droid callsign in Blue
+    RLD.selectScrollTextLeft("... R2-D2 DROIDBUILDERS UK ...", LogicEngineRenderer::kBlue, 0, 20);
 
-### Defaults
-<table>
-<tr><th></th><th>Front</th><th>	Rear</th></tr>
-<tr><td>FADE</td><td>	1</td><td>	3</td></tr>
-<tr><td>HUE</td><td>	0</td><td>	0</td></tr>
-<tr><td>DELAY</td><td>	10</td><td>	40</td></tr>
-<tr><td>PAL</td><td>	0</td><td>	1</td></tr>
-<tr><td>BRI</td><td>	160</td><td>	140</td></tr>
-</table>
+    // FLD: Scroll custom greeting in Red
+    FLD.selectScrollTextLeft("... ONLINE ...", LogicEngineRenderer::kRed, 0, 15);
+}
+```
 
-Also, the last option is for the default sequence that the display will run. This was needed to make the PSI default to the swipe, but could also be used to have the logics do a different effect constantly such as a line swiping left and right (cylon droid?!)
+* **Color Options:** `kRed`, `kOrange`, `kYellow`, `kGreen`, `kCyan`, `kBlue`, `kPurple`, `kMagenta`, `kPink`, `kDefault`.
+* **Direction Options:** `selectScrollTextLeft()`, `selectScrollTextRight()`, `selectScrollTextUp()`, or `selectTextCenter()`.

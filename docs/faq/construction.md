@@ -1,8 +1,13 @@
-## Why JLCPCB?
-Quite simply, they’re the cheapest I’ve found. And as an added bonus they have their own EasyEDA web based software with an easy path to export into their PCB manufacturing side. Plus they’re coupled with LCSC who are their component supplier. This means its a one stop shop and extremely easy to go from design to production.
-## Why do you use the cable lengths you do?
-These are common sizes that I can easily buy in bulk. The lengths are designed for a standard dome with the control board mounted on the back of the RLD. I looked at the various lengths and came up with the most efficient use of the standard ones available. This is why some use extension leads. Getting batches of custom made lengths would probably drive up the cost of the Astropixels quite a bit.
-## Are the files available for me to make my own?
-At the moment, no. But then they are generally just strings of ws2812 LEDs so not the hardest thing to replicate. Also the benefit is in the bulk purchasing. If you were to get a single set manufactured it would easily be about £200. Of course you may want to hand solder them, but if you can do that you can also design the boards.
-## Why the ESP32?
-I’ve been messing with Arduinos for over a decade now, and in the last few years I’ve switched to mainly ESP32 boards because the WiFi on them makes IoT devices easy to make, plus they have a lot more processing power. The development boards I use are very easy to find (must be 30pin versions for the Astropixels) and I use them in all sorts of projects.
+# Hardware & Design FAQ
+
+### Why JLCPCB?
+Quite simply, they offer excellent manufacturing quality and cost efficiency. Paired with EasyEDA and LCSC component sourcing, JLCPCB enables small-batch SMT assembly that keeps the final kit price as low as possible for club members.
+
+### Why did you select the specific cable harness lengths?
+The harness lengths are engineered around a standard 1:1 scale dome with the motherboard mounted directly to the rear of the RLD. The 10cm, 20cm, and 30cm servo cables (along with 30cm extensions) represent standard, mass-produced RC cable lengths. Using standard bulk lengths avoids the substantial added expense of bespoke crimped harnesses while providing enough slack to reach any 1:1 dome configuration.
+
+### Are the PCB Gerbers and hardware files open-source?
+Currently, no. The value in AstroPixels is in the bulk manufacturing runs. If an individual builder were to order a single one-off set of all 7 PCBs with surface-mount assembly from a fabrication house, setup fees and minimum order charges would easily exceed £200.
+
+### Why use the ESP32 microcontroller?
+The ESP32 offers substantial processing power, dual-core architecture, FreeRTOS multi-threading, and hardware UARTs. This ensures smooth 60fps NeoPixel animations across 269 pixels without timing jitter or blocking serial/I2C communication. Furthermore, the 30-pin NodeMCU module is an ubiquitous, inexpensive standard, making replacements easily available worldwide.

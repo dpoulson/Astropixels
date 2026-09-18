@@ -4,33 +4,34 @@
 
 ## Getting Started
 
-* [Quickstart](getting-started/quickstart.md)
-* [Kit Contents](getting-started/kit_contents.md)
-* [Power](getting-started/power.md)
-* [Installation](getting-started/installation.md)
+* [Quickstart Guide](getting-started/quickstart.md)
+* [Kit Contents & Specifications](getting-started/kit_contents.md)
+* [Power Requirements & Architecture](getting-started/power.md)
+* [Physical Installation & Mounting](getting-started/installation.md)
 
-## Advanced
+## Advanced & Customisation
 
-* [Overview](advanced/overview.md)
-* [Setting Up (Arduino)](advanced/environment-arduino.md)
-* [Setting Up (Platform IO)](advanced/environment-platformio.md)
-* [Changing Colors](advanced/colours.md)
-* [HoloProjectors](advanced/hp.md)
-* [Interfacing](advanced/interfacing.md)
-* [AstroPixelsPlus](advanced/app.md)
-* [Marcduino](advanced/marcduino.md)
-* [Precompiled](advanced/precompiled.md)
+* [Hardware & Architecture Overview](advanced/overview.md)
+* [Customising Colours & Animations](advanced/colours.md)
+* [HoloProjectors (HP)](advanced/hp.md)
+* [Serial & I2C Command Reference](advanced/interfacing.md)
+* [Marcduino Integration](advanced/marcduino.md)
+* [Precompiled Firmware & Web Flasher](advanced/precompiled.md)
+* [Developing with PlatformIO](advanced/environment-platformio.md)
+* [Compiling with Arduino IDE](advanced/environment-arduino.md)
+* [AstroPixelsPlus (WiFi & App)](advanced/app.md)
 
-## Troubleshooting
+## Diagnostics & Recovery
 
-* [Basics](troubleshooting/basics.md)
-* [Original Firmware](troubleshooting/original_firmware.md)
+* [Diagnostic & Troubleshooting Guide](troubleshooting/basics.md)
+* [Factory Reset & Recovery](troubleshooting/original_firmware.md)
 
-## FAQ
+## Frequently Asked Questions
 
-* [General](faq/general.md)
-* [Construction/Design](faq/construction.md)
-* [Purchasing/Shipping](faq/purchasing.md)
-* [Support](faq/support.md)
+* [General FAQ](faq/general.md)
+* [Hardware & Design FAQ](faq/construction.md)
+* [Purchasing & Shipping FAQ](faq/purchasing.md)
+* [Support FAQ](faq/support.md)
+
 
 

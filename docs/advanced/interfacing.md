@@ -1,160 +1,160 @@
-# Interfacing with the Astropixels
-One of the great parts about the Astropixels is that whilst at the simplest you can just plug them in for basic R2 lights, you can also trigger various built in effects and change colours on the fly. This is for the logics, PSIs, and HPs.
+# Serial & I2C Command Reference
 
-For instance, you could trigger the HP to coincide with the Leia message being played, or play the imperial march and turn R2 into full evil red mode.
+AstroPixels is built to react dynamically to your droid's actions. Through either **Hardware Serial (Serial2)** or the **I2C Bus**, an external controller (such as a Marcduino, Arduino master, Raspberry Pi, or wireless receiver) can trigger built-in animations, text crawls, and HoloProjector sequences on the fly.
 
-The main documentation can be found with the ReelTwo library [here](https://reeltwo.github.io/Reeltwo/html/index.html). However, this page will break things down a little bit.
+---
 
-You can interface with the Astropixels using either serial or i2c. By default, only i2c on address 0x0A is enabled on older firmwares. Newer firmwares have been updated to include serial input too. You can use the [web installer](https://dpoulson.github.io/Astropixels/) to upgrade.
+## 1. Physical Interfaces & Protocols
 
-### I2C
+### Hardware Serial2 (Recommended)
+* **Pins:** Motherboard `Serial2` header (`RX` &rarr; `GPIO 16`, `TX` &rarr; `GPIO 17`, `GND`).
+* **Baud Rate:** `9600 Baud`, `8` Data bits, `No` Parity, `1` Stop bit (`9600 8N1`).
+* **Format:** Plain ASCII string terminated with a newline (`\n`) or carriage return (`\r`).
+* **Grounding:** Must share a common ground with the transmitting controller.
 
-The i2c header has +ve, Gnd, Data, and clock connections. Only the data, clock, and gnd are needed. The default address is 0x0A.
+### I2C Bus
+* **Pins:** Motherboard `I2C` header (`SDA` &rarr; `GPIO 21`, `SCL` &rarr; `GPIO 22`, `GND`).
+* **I2C Slave Address:** `0x0A` (7-bit hexadecimal).
+* **Format:** Raw ASCII character byte stream sent across the I2C bus.
 
-### Serial
+---
 
-With the latest standard firmware, serial2 is listening at 9600 board for standard astropixel commands. If you want to use marcduinos, there is a custom firmware and instuctions for that [here](advanced/marcduino.md).
+## 2. Logic Engine Commands (`LE...`)
 
-## Commands
+Commands targeting the Front Logics (FLD), Rear Logics (RLD), or PSIs begin with `LE` followed by 6 parameters:
 
-### Logics and PSI
+```text
+LE <Target> <Effect> <Colour> <Speed> <Duration>
+```
 
-The logics and PSI both run the same LogicEngine code and have the same effects available to them. You can even run the PSI light style on a logic!
+### Parameter Breakdown
 
-All commands start with LE (for Logic Engine), followed by:
+| Field | Length | Description / Accepted Values |
+| :--- | :---: | :--- |
+| **`LE`** | 2 chars | Prefix indicating Logic Engine command. |
+| **`<Target>`** | 1 digit | Target display:<br>&bull; `0` = All displays (FLD, RLD, and PSIs)<br>&bull; `1` = Front Logic Displays (FLD)<br>&bull; `3` = Rear Logic Display (RLD)<br>&bull; `4` = Front PSI (FPSI)<br>&bull; `5` = Rear PSI (RPSI) |
+| **`<Effect>`** | 2 digits | Animation pattern (`00` to `24`, or `99`). See table below. |
+| **`<Colour>`** | 1 digit | Color override:<br>`0`=Default, `1`=Red, `2`=Orange, `3`=Yellow, `4`=Green, `5`=Cyan, `6`=Blue, `7`=Purple, `8`=Magenta, `9`=Pink |
+| **`<Speed>`** | 1 digit | Animation speed scaling (`0` to `9`, where `0` is fastest). |
+| **`<Duration>`**| 2 digits | Duration in seconds (`00` = run continuously until next command; `01`–`99` = timeout back to normal). |
 
-```<logic designation><effect><colour><speed><time>```
+### Complete Effect Codes & C++ Constants Table
 
-You must drop any leading 0’s.
+Every serial/I2C effect code has a corresponding C++ constant in `LogicEngineDefaults` that can be used directly in sketch code (via `selectSequence()`):
 
-#### Logic Designation:
-* 0 – All Logics and PSI
-* 1 – Front Logics
-* 3 – Rear Logics
-* 4 – Front PSI
-* 5 – Rear PSI
+| Code | ReelTwo C++ Constant (`LogicEngineDefaults::...`) | Effect Name | Description |
+| :---: | :--- | :--- | :--- |
+| **`00`** | `NORMAL` | **Normal** | Returns display to normal rolling astromech logic patterns. |
+| **`01`** | `ALARM` | **Alarm** | Flashes alternating rows between the primary color and bright red. |
+| **`02`** | `FAILURE` | **Failure** | Rapid color and brightness fading timed to R2 scream audio tracks. |
+| **`03`** | `LEIA` | **Leia** | Pale green/blue subdued flicker matching hologram playback. |
+| **`04`** | `MARCH` | **March** | Pulsing rhythmic logic sequence synchronized with the Imperial March. |
+| **`05`** | `SOLIDCOLOR` | **Solid Color** | Forces all LEDs in the display to a single static color. |
+| **`06`** | `FLASHCOLOR` | **Flashing Color** | Blinks the entire display on and off in the specified color. |
+| **`07`** | `FLIPFLOPCOLOR` | **Flip Flop** | Alternates top and bottom halves back and forth. |
+| **`08`** | `FLIPFLOPALTCOLOR` | **Flip Flop Alt** | Inverted alternating direction flip-flop. |
+| **`09`** | `COLORSWAP` | **Color Swap** | Switches continuously between specified color and its complementary opposite. |
+| **`10`** | `RAINBOW` | **Rainbow** | Smoothly cascades a full RGB rainbow spectrum across the matrix. |
+| **`11`** | `REDALERT` | **Red Alert** | Fast aggressive red strobing. |
+| **`14`** | `LIGHTSOUT` | **Lights Out** | Shuts off all LEDs in the display (stealth / power-down mode). |
+| **`15`** | `TEXT` | **Static Text** | Displays static text message. |
+| **`16`** | `TEXTSCROLLLEFT` | **Scroll Text Left** | Scrolls buffered text horizontally to the left. |
+| **`17`** | `TEXTSCROLLRIGHT`| **Scroll Text Right**| Scrolls buffered text horizontally to the right. |
+| **`18`** | `TEXTSCROLLUP` | **Scroll Text Up** | Scrolls buffered text vertically upward. |
+| **`19`** | `ROAMINGPIXEL` | **Roaming Pixel** | Single pixel scans matrix row by row (hardware diagnostic). |
+| **`20`** | `HORIZONTALSCANLINE` | **Horizontal Scanline** | Cylon / KITT horizontal scanning bar. |
+| **`21`** | `VERTICALSCANLINE` | **Vertical Scanline** | Vertical scanning bar. |
+| **`22`** | `FIRE` | **Fire** | Emulates organic burning embers and flames. |
+| **`23`** | `PSICOLORWIPE` | **PSI Color Wipe** | Standard PSI circular wiping animation. |
+| **`24`** | `PULSE` | **Pulse** | Smooth breathing brightness pulse. |
+| **`99`** | `RANDOM` | **Random Effect** | Randomly picks an effect from the library. |
 
-#### Effect (Two digits):
-* 00 – Normal
-* 01 – Alarm – flips between color and red
-* 02 – Failure – cycles colors and brightness fading – roughly timed to 128 screa-3.mp3
-* 03 – Leia – pale green
-* 04 – March – sequence timed to Imperial March
-* 05 – Single Color – single hue shown
-* 06 – Flashing Color – single hue on and off
-* 07 – Flip Flop Color – boards flip back and forth – similar to march
-* 08 – Flip Flop Alt – other direction of flips on back board, front is same to flip flop
-* 09 – Color Swap – switches between color specified and inverse compliment color
-* 10 – Rainbow – rotates through colors over time
-* 14 – Lights Out – turns off displays
-* 15 – Static Text
-* 16 – Text Scrolling Left
-* 17 – Text Scrolling Right
-* 18 – Text Scrolling Up
-* 19 – Roaming Pixel (pixel roams from top left to bottom right – for testing)
-* 20 – Horizontal Scanline
-* 21 – Vertical Scanline
-* 22 – Fire
-* 23 – PSI Swipe between two colours
-* 24 – Pulse
-* 99 – Select Random Effect
+---
 
-#### Colour:
-* 1 – Red
-* 2 – Orange
-* 3 – Yellow
-* 4 – Green
-* 5 – Cyan
-* 6 – Blue
-* 7 – Purple
-* 8 – Magenta
-* 9 – Pink
-* 0 – Default Colour
+### Programmatic C++ API vs Commands
 
-#### Speed:
-This is a value between 0 and 9, with 0 being the fastest
+If writing custom code or callbacks, you can trigger these effects programmatically without formatting text strings:
 
-* Flip Flop and Rainbow – 200ms x speed
-* Flash – 250ms x speed
-* March – 150ms x speed
-* Color Swap – 350ms x speed
+```cpp
+// 1. Direct object method (Target, Sequence, Color, Speed, Duration)
+RLD.selectSequence(LogicEngineDefaults::ALARM);
+FLD.selectSequence(LogicEngineDefaults::FIRE, LogicEngineDefaults::kRed, 2, 10);
+frontPSI.selectSequence(LogicEngineDefaults::PSICOLORWIPE, LogicEngineDefaults::kBlue);
 
-#### Time (Two digits):
-* 00 for continuous on most effects
-* 00 for default length on Leia message
-* Not used for march or failure effects
+// 2. Scrolling text programmatically
+RLD.selectScrollTextLeft("... ASTROPIXELS ...", LogicEngineRenderer::kBlue, 0, 15);
 
-#### Summary
-So for instance you could send via i2c the command ‘LE30000’ to set all logics to a pale green for the duration of the Leia message, or ‘LE1201010’ to make the front logics run a cylon style effect. One thing to watch out for is power draw if you do some effects.
+// 3. Process formatted command strings inside your sketch
+CommandEvent::process("LE1010003"); // Front logics alarm for 3 seconds
+```
 
+### C++ Color Enumeration (`LogicEngineDefaults::ColorVal`)
 
-### HPs
-The HPs use the same commands as the FlthyMcNasty HP system, as that code was incorporated into the ReelTwo library. All these commands are prefixed with the code ‘HP’, followed by:
+When calling `selectSequence()` or initializing `LogicEngineSettings`:
 
-```<HP designation><sequence type><sequence><colour><speed><random state><position>```
+```cpp
+enum ColorVal {
+    kDefault = 0,
+    kRed     = 1,
+    kOrange  = 2,
+    kYellow  = 3,
+    kGreen   = 4,
+    kCyan    = 5,
+    kBlue    = 6,
+    kPurple  = 7,
+    kMagenta = 8,
+    kPink    = 9
+};
+```
 
-#### HP designation:
-* F – Front HP
-* R – Rear HP
-* T – Top HP
-* D – Radar Eye (Extra hardware needed, info to come)
-* O – Other HP (Extra hardware needed, info to come)
-* A – All 3 HPs
-* X – Front & Rear HPs
-* Y – Front & Top HPs
-* Z – Rear & Top HPs
-* S – Sequences (See Below)
+---
 
-#### Sequence Type:
-This is either 0 for LED functions, or if you’ve added extra hardware to control servos you can use 1 to send signals to move the HPs
+## 3. HoloProjector Commands (`HP...`)
 
-#### Sequence:
-This is a two digit code
+HoloProjector commands control projector sequences, colors, and auto-twitch settings:
 
-* 01 – Leia sequence (blue)
-* 02 – One colour flickering
-* 03 – Dim Pulse
-* 04 – Cycle
-* 05 – Colour
-* 06 – Rainbow
-* 07 – Short Circuit
-* 96 – Clear Function, Disable Random LED Twitch, enable off color override, and random sequences (if enabled)
-* 97 – Clear Function, Enable Random LED Twitch using random LED sequences, enable off color override.
-* 98 – Clear Function, Disable Random LED Twitch, random sequences (if enabled) and disable off color override
-* 99 – Clear Function, Enable Random LED Twitch, using random LED sequences, disable off color override
+```text
+HP <Target> <Type> <Function> [Colour] [Speed] [|Duration]
+```
 
-#### Colour (Optional):
-* 1 – Red
-* 2 – Yellow
-* 3 – Green
-* 4 – Cyan
-* 5 – Blue
-* 6 – Magenta
-* 7 – Orange
-* 8 – Purple
-* 9 – White
-* 0 – Random
+### Parameter Breakdown
 
-#### Speed (Optional):
-Speed setting integer for the Dim Pulse LED function below (0-9)
+* **`<Target>`**: Which HoloProjector to address:
+  * `F` = Front HP | `R` = Rear HP | `T` = Top HP
+  * `A` = All 3 HPs
+  * `X` = Front & Rear | `Y` = Front & Top | `Z` = Rear & Top
+* **`<Type>`**: `0` for LED lighting function (`1` reserved for servo motion).
+* **`<Function>`**: 2-digit sequence code:
+  * `01` = Leia sequence (Blue flicker)
+  * `02` = Color Projector flicker (using specified color)
+  * `03` = Dim Pulse (smooth breathing glow)
+  * `04` = Cycle (rotating outer ring)
+  * `05` = Solid on
+  * `06` = Rainbow
+  * `07` = Short Circuit (rapid decelerating strobe)
+  * `96` = Clear HP, disable auto-twitch
+  * `97` = Clear HP, enable auto-twitch (default sequence)
+  * `98` = Clear HP, disable auto-twitch, enable off-color
+  * `99` = Clear HP, enable auto-twitch (random sequences)
+* **`[Colour]`** *(Optional)*: `1`=Red, `2`=Yellow, `3`=Green, `4`=Cyan, `5`=Blue, `6`=Magenta, `7`=Orange, `8`=Purple, `9`=White, `0`=Random.
+* **`[Speed]`** *(Optional)*: Speed scale (`0`–`9`).
+* **`[|Duration]`** *(Optional)*: Pipe character followed by duration in seconds (e.g. `|20` for 20 seconds). After the duration, the HP shuts off and returns to its background state.
 
-#### Random (Optional):
-Random State Integer Values
-* 1 = Use Default Sequences
-* 2 = Use Random Sequences
+---
 
-#### Position (Optional – if you have extra hardware for the servos):
-* 0 – Down
-* 1 – Center
-* 2 – Up
-* 3 – Left
-* 4 – Upper Left
-* 5 – Lower Left
-* 6 – Right
-* 7 – Upper Right
-* 8 – Lower Right
+## 4. Example Show Commands & Macros
 
-#### Summary
+Copy and send these ready-to-use strings over Serial2 or I2C:
 
-So for example, sending HPA0025|20 will turn all HPs twinkling blue for 20 seconds. Or HPA0041|10 will give a cycling red effect.
+| Desired Action | Command String | Explanation |
+| :--- | :--- | :--- |
+| **Reset All to Normal** | `LE0000000` | Resets all logics and PSIs back to normal rolling mode. |
+| **Scream / Red Alert (5 sec)** | `LE0011005` | Triggers Red Alert on all logics for 5 seconds. |
+| **Imperial March Mode** | `LE0041000` | Puts all logics into Imperial March pulsing in Red continuously. |
+| **Leia Message Playback** | `LE0030030\nHPA001|30` | Sets logics to subdued pale green and triggers HP blue hologram flicker for 30s. |
+| **Disco / Cantina Mode** | `LE0100015\nHPA006|15` | Displays rainbow logics and rainbow spinning HPs for 15 seconds. |
+| **Cylon Front Logics** | `LE1201010` | Runs red horizontal scanline on Front Logics for 10 seconds. |
+| **All Holos Short Circuit** | `HPA0071|10` | Fires red short-circuit flicker on all HPs for 10 seconds. |
+| **Mute / Stealth Mode** | `LE0140000\nHPA096` | Completely turns off all displays and disables HP twitch. |
+
 

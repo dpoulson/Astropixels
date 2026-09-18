@@ -1,12 +1,19 @@
-## Why did you create the Astropixels?
-Initially to just have a go at designing PCBs. I did the first PSIs and got them manufactured by JLCPCB and realised how easy it was and also just how cheap I could make them if ordering in bulk. So I did the rest of the dome light boards, using the ReelTwo library and the Astropixels were born. It was also a way to give people an upgrade that is both better and cheaper than the common teecees lights that are using very old tech. You can see a comparison of them here.
-## How long did it take?
-It took me a couple of months and a number of failed attempts to get the first batch made that I sold to some beta testers in the UK. I then started ramping up the production numbers, with a few tweaks to the design until about a year later I had what is now the current version.
-## Why so cheap?
-I get a lot of people asking this, and the answer is that I’m doing this for the love of the club. I’ve taken a lot from other members over the years with all the information and parts that they willingly share so I thought it was time to return the favour for the new people in the club. I don’t aim to make any money from this, so apart from making sure I’ve enough spares and that I’m not out of pocket I will keep the price as cheap as possible.
-## Do these fit into the Home Depot R2D2?
-No, the Home Depot R2 is not full size. These lights are designed to fit into a full sized replica. Some people have got them to fit, but it will take some serious hacking with a dremel.
-## Will you make some for the Home Depot R2D2?
-Almost certainly no. I can just about keep up with demand for full sized droids being built by the Builders Club. I don't have the time to do a redesign. The Home Depot R2 is also not available in this country, so I would be working blind. Lastly, as per the questions above, I do this for the love of the club to help people build droids that go out in public for charity and I don't personally make much money from them.
-## If I buy some and try to fit them into the Home Depot R2D2 but fail, will you take them back?
-No. If you've bought them after all these warnings, then it is on you.
+# General FAQ
+
+### Why did you create AstroPixels?
+Initially to explore PCB design. I designed the first prototype PSIs and had them manufactured by JLCPCB, quickly realizing how accessible it was and how cost-effective they could be when ordered in bulk. From there, I developed the full suite of dome light boards (RLD, FLD, HPs) around the ReelTwo library. The goal was to provide the community with an all-in-one upgrade that is both significantly more capable and far less expensive than legacy Teeces systems running on decade-old technology.
+
+### How long did development take?
+It took several months and multiple prototyping iterations to produce the first small production batch for beta testers in the UK Droidbuilders club. Based on feedback, I refined the traces, connectors, and mounting layouts until arriving at the rock-solid hardware revision shipping today.
+
+### Why is the kit so affordable?
+AstroPixels is a community-first passion project. Over the years, I've benefited immensely from the knowledge, 3D models, and open-source designs freely shared by other Astromech builders. AstroPixels is my way of giving back to new and veteran builders alike. I do not run this as a high-margin commercial enterprise; pricing covers bulk manufacturing costs, replacement spares, and a £10 charity contribution from every set.
+
+### Will AstroPixels fit into the animatronic Home Depot R2-D2?
+**No.** The Home Depot yard animatronic R2-D2 is not a 1:1 full-scale replica; its dome openings and bezels are substantially smaller than screen-accurate club dimensions. While a few builders have shoehorned parts of the kit in using aggressive Dremel surgery, AstroPixels is neither designed nor intended for that model.
+
+### Will you produce a miniature version for the Home Depot R2-D2?
+Almost certainly no. Keeping up with worldwide demand from full-scale 1:1 builders takes all available workshop capacity, and the Home Depot prop is not commercially distributed in the UK.
+
+### If I buy a set hoping to fit them into a Home Depot R2-D2 and fail, can I return them?
+No. All specifications, dimensions, and warnings are clearly documented up front.

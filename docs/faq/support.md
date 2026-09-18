@@ -1,10 +1,16 @@
-## I’ve a faulty board, can you help?
-Of course! Drop me a line and we can try some basic trouble shooting. If it turns out there is a faulty part I will get a replacement out to you asap.
-## Can I integrate the Astropixels with <x>?
-There are lots of options for integration with various control systems. However, I can’t possibly know everything about them. There is documentation on how to send commands to the Astropixels to trigger effects but it is up to you to figure it out. Some people have worked with common systems such as the Marcduino and there is lots of documentation on the internet on how to do it. I ship the Astropixels with the most basic of code as that is what the vast majority of people want. There is an AstroPixelsPlus firmware available that another club member has written that extends the functionality. At the end of the day, I’m providing some hardware for as cheap as possible. There are lots of capabilities that can be added. Of course you’re welcome to message me and I’ll certainly try to help.
-## I’m building a scale R2 (bigger/smaller), can you sell me lights for them?
-Unfortunately, no. Theres a lot of work and money that goes into developing the boards and I simply do not have the time. There is a reason my own projects are not finished!
-## Can you sell me some lights with different colours and/or startup text?
-The sets are usually already boxed up and ready to ship when stock is on the store, so I don’t offer any custom programming options. However there are instructions on this site on how to customise your Astropixels. Its fairly easy and I recommend anyone building a droid be familiar with basic Arduino programming anyway.
-## Have you a video or diagram to show how to put these together?
-Nope, I don’t like to do videos or anything like that, and have not managed to make a diagram that I’m happy with. But if someone wants to make one then I’ll happily share that. I do also suck at documentation, and I know I need to improve on that somewhat. This is an ongoing project (and part of the reason I’m writing this FAQ)
+# Support FAQ
+
+### What should I do if I suspect a faulty board?
+Drop me a line through the store or on the club forums with a photo or brief description of what is happening. We will run through a quick diagnostic check (see [Diagnostic & Troubleshooting Guide](../troubleshooting/basics.md)). If any PCB or component arrived damaged or failed during normal operation, I will get a replacement board shipped out to you right away.
+
+### Can I integrate AstroPixels with my control system (Marcduino, Padawan, RC, Raspberry Pi)?
+Yes! AstroPixels is designed around open standards. It features both a **9600 baud serial port (Serial2)** and an **I2C bus (Address `0x0A`)**. If you run Marcduino, simply install the `standard-md` firmware and refer to our [Marcduino Integration Guide](../advanced/marcduino.md). For custom microcontrollers or microcomputers, see the [Serial & I2C Command Reference](../advanced/interfacing.md).
+
+### Do you make lights for custom-scaled droids (e.g. 50%, 75%, or larger scale)?
+Currently, no. Tooling, PCB layout, and manufacturing runs are engineered specifically around standard 1:1 scale R2-D2 Builders Club dome geometry and bezels.
+
+### Can you sell me a pre-programmed set with custom colors or my name in the boot scroll?
+Kits are pre-assembled, tested, boxed, and sealed in advance so they can ship immediately when an order is placed. While I cannot offer one-off custom factory programming, customizing your lights is simple! You can flash ready-made profiles (like Imperial Red or R2-KT Pink) via our [Web Installer](../advanced/precompiled.md), or customize the text and colors directly using our [Customising Colours Guide](../advanced/colours.md).
+
+### Are there wiring diagrams and assembly guides?
+Yes! Refer to the [Quickstart Guide](../getting-started/quickstart.md) for complete pinout and daisy-chaining schematics, the [Installation Guide](../getting-started/installation.md) for 3D printed bezels and brackets, and the [Hardware Overview](../advanced/overview.md) for technical pin mappings.
