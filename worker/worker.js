@@ -145,15 +145,23 @@ export default {
       const model = env.GEMINI_MODEL || "gemini-3.6-flash";
       const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
+      const generationConfig = {
+        temperature: 0.2,
+        maxOutputTokens: 2048,
+      };
+
+      if (model.includes("gemini-3")) {
+        generationConfig.thinkingConfig = { thinkingLevel: "LOW" };
+      } else if (model.includes("gemini-2.5")) {
+        generationConfig.thinkingConfig = { thinkingBudget: 0 };
+      }
+
       const payload = {
         systemInstruction: {
           parts: [{ text: SYSTEM_INSTRUCTION }],
         },
         contents: history,
-        generationConfig: {
-          temperature: 0.2,
-          maxOutputTokens: 800,
-        },
+        generationConfig,
       };
 
       const geminiRes = await fetch(apiUrl, {
@@ -180,7 +188,20 @@ export default {
 
       const data = await geminiRes.json();
       const candidate = data.candidates?.[0];
-      const reply = candidate?.content?.parts?.map((p) => p.text || "").join("").trim() || "I'm sorry, I couldn't generate a response.";
+      const reply = candidate?.content?.parts
+        ?.filter((p) => !p.thought)
+        ?.map((p) => p.text || "")
+        .join("")
+        .trim() || "I'm sorry, I couldn't generate a response.";
+
+      if (candidate?.finishReason === "MAX_TOKENS") {
+        console.warn(JSON.stringify({
+          level: "WARN",
+          event: "RESPONSE_TRUNCATED_MAX_TOKENS",
+          candidatesTokens: data.usageMetadata?.candidatesTokenCount || 0,
+          clientIP,
+        }));
+      }
 
       // Log structured usage data for observability
       console.log(JSON.stringify({
@@ -189,6 +210,7 @@ export default {
         clientIP,
         origin: origin || "direct",
         query: queryText,
+        finishReason: candidate?.finishReason || "UNKNOWN",
         tokens: {
           prompt: data.usageMetadata?.promptTokenCount || 0,
           candidates: data.usageMetadata?.candidatesTokenCount || 0,
